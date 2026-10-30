@@ -1,0 +1,27 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Texturas para o Site Diego</title>
+<style>
+body{margin:0;font:16px/1.6 Ubuntu,system-ui,sans-serif;background:#1A1615;color:#D6D2C4;padding:24px}
+h1{font:600 1.4rem Georgia,serif;margin:0 0 4px}p{margin:.2rem 0}
+.g{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:18px}
+.s{border-radius:6px;padding:26px 22px;min-height:230px;position:relative;overflow:hidden}
+.s h2{font:600 1.25rem Georgia,serif;margin:0 0 .4rem}.s small{opacity:.75;display:block;margin-top:.8rem}
+.s::before{content:"";position:absolute;inset:0;pointer-events:none}
+.s>*{position:relative}
+.papel{background:#D6D2C4;color:#1A1615}
+.papel::before{opacity:.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .40  0 0 0 0 .30  0 0 0 .55 0'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+.bege{background:#D9C89D;color:#1A1615}
+.bege::before{opacity:.55;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.02 .6' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .38  0 0 0 0 .2  0 0 0 .5 0'/></filter><rect width='400' height='400' filter='url(%23n)'/></svg>")}
+.carmim{background:#9D2235;color:#D6D2C4}
+.carmim::before{opacity:.35;mix-blend-mode:soft-light;background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.5) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(255,255,255,.45) 0 1px,transparent 1px 3px)}
+.escuro{background:radial-gradient(120% 90% at 50% 0%,#4a1019 0%,#1A1615 65%);color:#D9C89D}
+.escuro::before{opacity:.18;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 .9  0 0 0 0 .7  0 0 0 .6 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>")}
+</style>
+<h1>Proposta de textura: "papel de gravura"</h1>
+<p>Granulado fino e quase invisível, como o papel das gravuras e pinturas do site. A mesma ideia em quatro fundos.</p>
+<div class="g">
+<div class="s papel"><h2>Off-white: grão de papel</h2><p>Ruído fino multiplicado. Origem, Pilares e Fé.</p><small>feTurbulence 0.9, opacidade 50%</small></div>
+<div class="s bege"><h2>Bege: fibra de papel artesanal</h2><p>Fibras horizontais sutis. Consulta e Agendar.</p><small>feTurbulence 0.02 x 0.6</small></div>
+<div class="s carmim"><h2>Carmim: trama de linho</h2><p>Trama de tecido em soft-light. Camadas e Conteúdo.</p><small>linhas cruzadas de 3px, opacidade 35%</small></div>
+<div class="s escuro"><h2>Escuro: brasa e poeira</h2><p>Brilho carmim no alto e grão claro. Hero e rodapé.</p><small>gradiente radial + ruído 18%</small></div>
+</div>
+</html>

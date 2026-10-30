@@ -1,0 +1,4 @@
+Publicacao/
+.claude/
+__pycache__/
+*.pyc
