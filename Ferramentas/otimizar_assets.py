@@ -76,6 +76,7 @@ def logos() -> None:
         im.save(d / f"{nome}.webp", quality=92, method=6)
         log(f"logo {nome}.webp {im.size} {(d / f'{nome}.webp').stat().st_size // 1024} KB")
     icone()
+    wordmark()
 
 
 def faixa_icone(png: Path) -> tuple[Image.Image, tuple[int, int, int, int]]:
@@ -87,6 +88,20 @@ def faixa_icone(png: Path) -> tuple[Image.Image, tuple[int, int, int, int]]:
     topo = max(gaps)[1] if gaps else ys[-1]
     xs = np.where(a[: topo + 1].any(axis=0))[0]
     return im, (int(xs[0]), int(ys[0]), int(xs[-1]) + 1, int(topo) + 1)
+
+
+def wordmark() -> None:
+    """Só o texto DR. DIEGO AIRES / CARDIOLOGISTA (parte de baixo do logo negativo), para entrar em fade sobre o vídeo."""
+    im = Image.open(achar_png("Marca Negativa Colorida - Uso")).convert("RGBA")
+    a = np.array(im)[:, :, 3] > 10
+    ys = np.where(a.any(axis=1))[0]
+    gaps = [(ys[i + 1] - ys[i], ys[i + 1]) for i in range(len(ys) - 1) if ys[i + 1] - ys[i] > 1]
+    y0 = max(gaps)[1]
+    xs = np.where(a[y0:].any(axis=0))[0]
+    wm = im.crop((int(xs[0]), int(y0), int(xs[-1]) + 1, int(ys[-1]) + 1))
+    wm = wm.resize((1600, round(wm.height * 1600 / wm.width)), Image.LANCZOS)
+    wm.save(ASSETS / "logo" / "wordmark-negativa.webp", quality=92, method=6)
+    log(f"wordmark-negativa.webp {wm.size}")
 
 
 def icone() -> None:
