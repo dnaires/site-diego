@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /privacidade.html
-# TODO: trocar CONFIRMAR-DOMINIO pelo domínio definitivo
-Sitemap: https://CONFIRMAR-DOMINIO/sitemap.xml
+Sitemap: https://drdiegoaires.medicinacardeal.com.br/sitemap.xml

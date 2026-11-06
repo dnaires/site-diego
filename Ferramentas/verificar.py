@@ -31,7 +31,7 @@ def check_travessao(html: str, css: str) -> list[str]:
 
 def check_credenciais(html: str, css: str) -> list[str]:
     txt = texto_visivel(html)
-    return [f"falta '{s}' no texto visível" for s in ("CRM-DF 19878", "RQE 15628") if s not in txt]
+    return [f"falta '{s}' no texto visível" for s in ("CRM-DF 19878", "RQE 15628", "RQE 13972") if s not in txt]
 
 
 def check_contato_clinica(html: str, css: str) -> list[str]:

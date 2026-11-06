@@ -28,6 +28,8 @@
     var sub = hero.querySelector('.hero__sub');
     var caixa = document.getElementById('hero-video');
     var wm = caixa ? caixa.querySelector('.hero__wordmark') : null;
+    var intro = document.getElementById('hero-intro');
+    var cta = document.getElementById('hero-cta');
     var vid = null;
     var frames = [];     // Image[] (null enquanto não carregou), só no modo canvas
     var total = 0;
@@ -43,6 +45,7 @@
       vid = document.createElement('video');
       vid.muted = true; vid.playsInline = true; vid.preload = 'auto'; vid.tabIndex = -1;
       vid.setAttribute('aria-hidden', 'true');
+      vid.poster = 'assets/hero/inicio.webp';        // primeiro quadro, enquanto o vídeo carrega
       vid.src = 'assets/hero/' + (S.mobile ? m.video.mobile : m.video.desktop);
       caixa.insertBefore(vid, caixa.firstChild);
       hero.style.setProperty('--fundo', m.fundo[0]);
@@ -108,6 +111,8 @@
         }
       }
     });
+    if (intro) tl.to(intro, { autoAlpha: 0, duration: 0.07 }, 0.05);              // título some quando o vídeo anda
+    if (cta) tl.to(cta, { autoAlpha: 1, duration: 0.05 }, 0.92);                  // botões no último quadro
     tl.to(words, { opacity: 1, stagger: 0.035, duration: 0.05 }, 0)             // 0 .. ~0.65 (17 palavras)
       .to(stage, { '--brasa': 1, duration: 0.25 }, 0.45)
       .to(oracao, { opacity: 0, duration: 0.22 }, 0.72);                         // fixo, só esmaece devagar

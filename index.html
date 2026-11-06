@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dr. Diego Aires | Cardiologista em Brasília</title>
-<meta name="description" content="Dr. Diego Aires, cardiologista em Brasília. Cardiologia preventiva, clínica médica, medicina do estilo de vida e longevidade com evidência. CRM-DF 19878, RQE 15628.">
-<!-- TODO: definir domínio e preencher canonical e og:url -->
-<link rel="canonical" href="https://CONFIRMAR-DOMINIO/">
+<meta name="description" content="Dr. Diego Aires, cardiologista em Brasília. Cardiologia preventiva, clínica médica, medicina do estilo de vida e longevidade com evidência. CRM-DF 19878, RQE 15628 (Cardiologia), RQE 13972 (Clínica Médica).">
+<link rel="canonical" href="https://drdiegoaires.medicinacardeal.com.br/">
+<meta property="og:url" content="https://drdiegoaires.medicinacardeal.com.br/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="Dr. Diego Aires | Cardiologista em Brasília">
 <meta property="og:description" content="Cardiologia preventiva, clínica médica, medicina do estilo de vida e longevidade com evidência.">
-<meta property="og:image" content="assets/og-image.jpg">
+<meta property="og:image" content="https://drdiegoaires.medicinacardeal.com.br/assets/og-image.jpg">
 <meta name="theme-color" content="#9D2235">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preload" href="assets/fonts/spectral-sc-regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -19,8 +19,8 @@
 <link rel="stylesheet" href="assets/css/site.css">
 <!-- JSON-LD: só dados confirmados (endereço, horários e telefone são da Medicina Cardeal) -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Physician","name":"Dr. Diego Aires","medicalSpecialty":"Cardiology",
- "description":"Médico cardiologista em Brasília-DF. CRM-DF 19878, RQE 15628.",
+{"@context":"https://schema.org","@type":"Physician","name":"Dr. Diego Aires","url":"https://drdiegoaires.medicinacardeal.com.br/","medicalSpecialty":"Cardiology",
+ "description":"Médico cardiologista em Brasília-DF. CRM-DF 19878, RQE 15628 (Cardiologia), RQE 13972 (Clínica Médica).",
  "telephone":"+55-61-98402-6331",
  "worksFor":{"@type":"MedicalClinic","name":"Medicina Cardeal","url":"https://www.medicinacardeal.com.br/"},
  "address":{"@type":"PostalAddress","streetAddress":"Edifício Via Brasil, SEPS 710/910, Salas 345 e 347","addressLocality":"Brasília","addressRegion":"DF","postalCode":"70390-108","addressCountry":"BR"},
@@ -60,14 +60,26 @@
     <!-- Vídeo 9:16 (criado por hero.js) centralizado, sem corte lateral; o texto do logo entra em fade sobre o último quadro -->
     <div class="hero__video" id="hero-video" hidden aria-hidden="true"><img class="hero__wordmark" src="assets/logo/wordmark-negativa.webp" width="1600" height="336" loading="lazy" alt=""></div>
     <img class="hero__logo" src="assets/logo/logo-negativa-vertical.webp" width="1200" height="1119" alt="Dr. Diego Aires, Cardiologista. Símbolo: coração em chamas">
-    <h1 class="sr-only">Dr. Diego Aires, cardiologista em Brasília</h1>
-    <!-- Áreas informadas pelo Dr. Diego. Ele tem RQE em Clínica Médica. Na Medicina Cardeal, Estilo de Vida e Longevidade constam como áreas de interesse -->
-    <ul class="hero__sub"><li>Cardiologia Preventiva</li><li>Clínica Médica</li><li>Medicina do Estilo de Vida</li><li>Longevidade com Evidência</li></ul>
+    <!-- Título e convite para rolar: visíveis no primeiro quadro, somem quando o vídeo começa (hero.js) -->
+    <div class="hero__intro" id="hero-intro">
+      <h1 class="hero__titulo">Dr. Diego Aires, cardiologista em Brasília</h1>
+      <p class="hero__frase">Consultas particulares de 1h a 1h30, na Medicina Cardeal, Asa Sul, ou por telemedicina.</p>
+      <p class="hero__dica"><span aria-hidden="true"></span>Role a página</p>
+    </div>
+    <!-- Botões no fim do vídeo (desktop); no celular a barra fixa Agendar/Ligar faz esse papel -->
+    <div class="hero__cta" id="hero-cta">
+      <a class="btn btn--claro" href="https://wa.me/5561984026331?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20primeira%20consulta%20com%20o%20Dr.%20Diego%20Aires%20na%20Medicina%20Cardeal." target="_blank" rel="noopener">Agendar consulta</a>
+      <a class="btn btn--vazado" href="#consulta">Como é a consulta</a>
+    </div>
+    <!-- CFM 2.336/2023: especialidades (com RQE: Cardiologia 15628, Clínica Médica 13972) separadas das áreas de interesse, como no Site Cardeal -->
+    <div class="hero__sub">
+      <ul class="hero__esp" aria-label="Especialidades"><li>Cardiologia</li><li>Clínica Médica</li></ul>
+      <p class="hero__int">Áreas de interesse: cardiologia preventiva, medicina do estilo de vida e longevidade com evidência</p>
+    </div>
     <!-- Oração Vinde, Espírito Santo (domínio público). Texto em HTML, nunca gerado por IA. -->
     <p class="oracao" id="oracao" aria-label="Vinde, Espírito Santo, enchei os corações dos vossos fiéis e acendei neles o fogo do vosso amor.">
       <span class="w">Vinde,</span> <span class="w d">Espírito</span> <span class="w d">Santo,</span> <span class="w">enchei</span> <span class="w">os</span> <span class="w d">corações</span> <span class="w">dos</span> <span class="w">vossos</span> <span class="w">fiéis</span> <span class="w">e</span> <span class="w">acendei</span> <span class="w">neles</span> <span class="w">o</span> <span class="w d">fogo</span> <span class="w">do</span> <span class="w">vosso</span> <span class="w d">amor.</span>
     </p>
-    <span class="hero__rolar" aria-hidden="true">Role</span>
   </div>
 </section>
 
@@ -79,10 +91,10 @@
     </figure>
     <div class="origem__texto">
       <h2 class="reveal">Dr. Diego Aires</h2>
-      <p class="cred reveal">Cardiologista · CRM-DF 19878 · RQE 15628</p>
+      <p class="cred reveal">CRM-DF 19878 · RQE 15628 (Cardiologia) · RQE 13972 (Clínica Médica)</p>
       <!-- Texto do Dr. Diego (30/10/2026), condensado em 31/10/2026 -->
-      <p class="lead reveal">Nasci em Corrente, no Piauí, filho de farmacêutico e de enfermeira. Em 2000 saí de casa para fazer o Ensino Médio em Goiânia.</p>
-      <p class="reveal">Foram dez anos de UTI, desde 2016. Ali vi onde termina a doença do coração. Hoje trabalho para que ela não comece.</p>
+      <!-- 06/11: o trecho sobre Corrente (PI) e Goiânia saiu a pedido do Dr. Diego -->
+      <p class="lead reveal">Foram dez anos de UTI, desde 2016. Ali vi onde termina a doença do coração. Hoje trabalho para que ela não comece.</p>
       <h3 class="trajeto__titulo reveal">Formação e trajetória</h3>
       <!-- TODO: confirmar com o Dr. Diego: fim do período na UTI (2026) e se o cargo de assessor do APH também começa em 2022 -->
       <ol class="trajeto reveal">
@@ -107,14 +119,16 @@
         <p>Músculo, ritmo, pressão, artérias. Trato com ciência, diretriz e exame que muda conduta.</p>
         <ul><li>Ritmo</li><li>Pressão</li><li>Artérias</li></ul>
       </div>
-      <figure class="camadas__centro reveal">
-        <!-- FONTE: Niccolò Ricciolini, "Tab. IV", Fig. I, desenhada e gravada em Roma em 1703 (inscrição na placa: "Nic. Ricciolinus del. et sculp. Romae 1703"). Publicada em Giovanni Maria Lancisi, De motu cordis et aneurysmatibus, Roma: Salvioni, 1728. Cópia digital: Wellcome Collection (b30456599, imagem 0185), Public Domain Mark. Recorte em negativo gerado por Ferramentas/otimizar_assets.py -->
-        <img class="camadas__arte reveal reveal--desenha" src="assets/art/ricciolini-fig1.webp" width="725" height="1400" loading="lazy" alt="Gravura anatômica de 1703 (Fig. I): coração visto de frente, com traqueia e grandes vasos, legendado com letras, em traço bege sobre fundo carmim">
+      <!-- 06/11: o negativo sobre o carmim foi recusado; escolhido pelo Dr. Diego: a gravura em positivo, num painel claro.
+           FONTE: Niccolò Ricciolini, "Tab. IV", Fig. I, desenhada e gravada em Roma em 1703 ("Nic. Ricciolinus del. et sculp. Romae 1703").
+           Em Giovanni Maria Lancisi, De motu cordis et aneurysmatibus, Roma: Salvioni, 1728. Wellcome Collection (b30456599, imagem 0185), Public Domain Mark. -->
+      <figure class="camadas__centro camadas__centro--claro reveal">
+        <img class="camadas__arte" src="assets/art/ricciolini-fig1-positivo.webp" width="725" height="1400" loading="lazy" alt="Gravura anatômica de 1703 (Fig. I): coração visto de frente, com traqueia e grandes vasos, legendado com letras, em traço vinho sobre papel claro">
         <figcaption class="camadas__legenda">Niccolò Ricciolini, 1703. Em G. M. Lancisi, <em>De motu cordis et aneurysmatibus</em>, Roma, 1728.</figcaption>
       </figure>
       <div class="camadas__col camadas__col--dir reveal">
         <h3>O coração que decide</h3>
-        <p>Na tradição bíblica e cristã, o coração é o centro da pessoa, onde razão, vontade e afeto se encontram.</p>
+        <p>Na tradição clássica, o coração é o centro da pessoa, onde razão, vontade e afeto se encontram.</p>
         <ul><li>Razão</li><li>Vontade</li><li>Afeto</li></ul>
       </div>
     </div>
@@ -125,35 +139,56 @@
 <!-- 4. QUATRO PILARES -->
 <section class="sec sec--claro" id="pilares">
   <div class="container">
-    <div class="pilares__cab"><h2 class="reveal pilares__titulo">Uma cruz, com o coração ao centro.</h2>
-    <p class="kicker reveal pilares__kicker">Quatro pilares</p></div>
-    <!-- RASCUNHO: parágrafos curtos, sem promessas. Aristóteles (Razão), Viktor Frankl (Emoção), Tomás de Aquino (Espírito) -->
+    <!-- 06/11: fé como assinatura; o título deixou de ser "Uma cruz, com o coração ao centro." (a forma da cruz continua no desenho) -->
+    <div class="pilares__cab"><h2 class="reveal pilares__titulo">Quatro pilares, com o coração ao centro.</h2></div>
+    <!-- RASCUNHO: parágrafos curtos, sem promessas. Pensadores citados dentro do texto, sem destaque (pedido de 06/11): Aristóteles (Razão), Viktor Frankl (Emoção), Tomás de Aquino (Espírito) -->
     <div class="cruz">
       <span class="cruz__forma" aria-hidden="true"><span class="cruz__v"></span><span class="cruz__h"></span></span>
       <div class="cruz__centro reveal"><img src="assets/logo/icone.webp" width="645" height="900" loading="lazy" alt="Símbolo da marca Dr. Diego Aires: coração em chamas"></div>
       <article class="pilar pilar--corpo reveal"><h3>Corpo</h3><p>Cardiologia preventiva baseada em evidência. Risco que se mede, conduta que se justifica.</p></article>
-      <article class="pilar pilar--razao reveal"><h3>Razão</h3><p class="pilar__autor">Aristóteles</p><p>A tradição que ensina a pensar com ordem. A conduta clínica precisa de uma razão que se possa explicar.</p></article>
-      <article class="pilar pilar--emocao reveal"><h3>Emoção</h3><p class="pilar__autor">Viktor Frankl</p><p>O ser humano busca sentido, e sentido também importa para a saúde. Escuta, tempo e vínculo com o paciente.</p></article>
-      <article class="pilar pilar--espirito reveal"><h3>Espírito</h3><p class="pilar__autor">Tomás de Aquino</p><p>Fé e razão não se contradizem. Fé cristã vivida, onde todo paciente é acolhido como irmão.</p></article>
+      <article class="pilar pilar--razao reveal"><h3>Razão</h3><p>Desde Aristóteles, aprendemos a pensar com ordem. A conduta clínica precisa de uma razão que se possa explicar.</p></article>
+      <article class="pilar pilar--emocao reveal"><h3>Emoção</h3><p>Viktor Frankl mostrou que o ser humano busca sentido, e sentido também importa para a saúde. Por isso, tempo e vínculo com o paciente.</p></article>
+      <article class="pilar pilar--espirito reveal"><h3>Espírito</h3><p>Fé e razão não se contradizem, como ensinou Tomás de Aquino. Todo paciente é acolhido como irmão.</p></article>
     </div>
   </div>
 </section>
 
 <!-- 5. CONSULTA -->
 <section class="sec sec--bege" id="consulta">
+  <!-- Conteúdo da consulta confirmado pelo Dr. Diego em 06/11/2026: 1h a 1h30, medicina do estilo de vida
+       com os 6 pilares, questionários de saúde, nota no Mapa da Saúde ao final. Periodicidade, recibo para
+       reembolso e valores NÃO entram no site: a secretária explica pelo WhatsApp. -->
   <div class="container consulta">
-    <div>
-      <h2 class="reveal">O que levar na primeira consulta</h2>
-    </div>
-    <div>
+    <header class="consulta__intro">
+      <h2 class="reveal">Como é a primeira consulta</h2>
+      <p class="lead reveal">Uma consulta particular de 1h a 1h30, pautada na medicina do estilo de vida, em quatro etapas.</p>
+    </header>
+    <ol class="passos reveal">
+      <li><span class="passos__num">1</span><h3>Sua história</h3><p>Sintomas, doenças, remédios, exames e a saúde da sua família.</p></li>
+      <li><span class="passos__num">2</span><h3>Questionários de saúde</h3><p>Os que se aplicam ao seu caso, respondidos durante a consulta.</p></li>
+      <li><span class="passos__num">3</span><h3>Os seis pilares do estilo de vida</h3><p>Alimentação, atividade física, sono, estresse, relacionamentos e uso de álcool, tabaco e outras substâncias.</p></li>
+      <li><span class="passos__num">4</span><h3>Mapa da Saúde</h3><p>No fim da consulta, você recebe a sua nota no Mapa da Saúde: onde você está hoje e por onde começar.</p></li>
+    </ol>
+    <div class="consulta__base">
+    <aside class="levar-box reveal" aria-labelledby="levar-titulo">
+      <h3 id="levar-titulo">O que levar</h3>
       <!-- RASCUNHO: itens genéricos de uma primeira consulta; o Dr. Diego confirma ou ajusta -->
-      <ul class="levar reveal">
+      <ul class="levar">
         <li>Exames anteriores, mesmo os antigos.</li>
         <li>A lista dos remédios que você usa, com as doses.</li>
         <li>Casos de doença do coração na família, com a idade em que apareceram.</li>
-        <li>Consultas particulares de no mínimo 1h de duração</li>
-        <li>Possibilidade de adesão a planos de acompanhamento contínuo</li>
       </ul>
+    </aside>
+    <div class="acomp reveal" id="acompanhamento">
+      <div>
+        <h3>Acompanhamento contínuo</h3>
+        <p>Quem quiser seguir comigo depois da primeira consulta pode aderir ao acompanhamento contínuo. Entre em contato para mais informações.</p>
+      </div>
+      <div class="acomp__botoes">
+        <a class="btn btn--claro" href="https://wa.me/5561984026331?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20primeira%20consulta%20com%20o%20Dr.%20Diego%20Aires%20na%20Medicina%20Cardeal." target="_blank" rel="noopener">Agendar primeira consulta</a>
+        <a class="btn btn--vazado" href="https://wa.me/5561984026331?text=Ol%C3%A1!%20Gostaria%20de%20saber%20como%20funciona%20o%20acompanhamento%20cont%C3%ADnuo%20com%20o%20Dr.%20Diego%20Aires%20na%20Medicina%20Cardeal." target="_blank" rel="noopener">Quero saber do acompanhamento</a>
+      </div>
+    </div>
     </div>
   </div>
 </section>
@@ -169,10 +204,7 @@
       <!-- RASCUNHO: tom de testemunho, não de pregação -->
       <p class="lead reveal">Sou cardiologista e sou Cristão.</p>
       <p class="reveal">A fé não substitui o diagnóstico, mas nenhum diagnóstico basta para explicar uma pessoa.</p>
-      <div class="fe__menores">
-        <blockquote class="reveal">“O coração tem razões que a razão desconhece.”<cite>Blaise Pascal, Pensamentos</cite></blockquote>
-        <blockquote class="reveal">“Tirarei do vosso peito o coração de pedra e vos darei um coração de carne.”<cite>Ezequiel 36,26</cite></blockquote>
-      </div>
+      <!-- 06/11: Pascal e Ezequiel saíram (fé como assinatura: uma citação só nesta seção) -->
     </div>
   </div>
 </section>
@@ -227,7 +259,7 @@
       <img src="assets/logo/logo-negativa-vertical.webp" width="1200" height="1119" loading="lazy" alt="Dr. Diego Aires, Cardiologista">
     </div>
     <div>
-      <p class="cred"><strong>Dr. Diego Aires</strong><br>Médico cardiologista, Brasília-DF<br>CRM-DF 19878 · RQE 15628</p>
+      <p class="cred"><strong>Dr. Diego Aires</strong><br>Médico cardiologista, Brasília-DF<br>CRM-DF 19878<br>RQE 15628 (Cardiologia) · RQE 13972 (Clínica Médica)</p>
       <p>Atendimento na Medicina Cardeal<br>Edifício Via Brasil, SEPS 710/910, Salas 345 e 347<br>Asa Sul, Brasília-DF · 70390-108<br>Seg a sex, 08h00 às 18h00 · Sáb, 08h00 às 12h00<br><a class="footer__tel" href="tel:+5561984026331">(61) 98402-6331</a> · <a href="mailto:contato@medicinacardeal.com.br">contato@medicinacardeal.com.br</a><br><a class="btn btn--claro footer__wa" href="https://wa.me/5561984026331?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Diego%20Aires%20na%20Medicina%20Cardeal." target="_blank" rel="noopener">Agendar pelo WhatsApp</a></p>
       <p><a href="https://www.instagram.com/dnaires/" rel="noopener" target="_blank">@dnaires</a> · <a href="privacidade.html">Política de privacidade</a></p>
     </div>

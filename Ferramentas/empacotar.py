@@ -10,7 +10,7 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 PUB = RAIZ / "Publicacao"
 SAIDA = PUB / "public_html"
-ARQUIVOS = ["index.html", "privacidade.html", "robots.txt", "sitemap.xml"]
+ARQUIVOS = ["index.html", "privacidade.html", "robots.txt", "sitemap.xml", ".htaccess"]
 
 
 def tenta(fn, *args, vezes=5, **kw):

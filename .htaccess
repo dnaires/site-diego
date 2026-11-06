@@ -1,0 +1,58 @@
+# ---------- Dr. Diego Aires: regras do servidor (Hostinger/LiteSpeed/Apache) ----------
+# Site em drdiegoaires.medicinacardeal.com.br (subdomínio da Medicina Cardeal).
+# Se o subdomínio ficar numa pasta dentro do public_html da Cardeal, o .htaccess dela também
+# vale aqui; os cabeçalhos abaixo repetem os mesmos valores, então não há conflito.
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # sempre HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # endereço canônico sem www (só funciona se existir o DNS de www.drdiegoaires; ver docs/PUBLICAR.md)
+  RewriteCond %{HTTP_HOST} ^www\.drdiegoaires\.medicinacardeal\.com\.br$ [NC]
+  RewriteRule ^ https://drdiegoaires.medicinacardeal.com.br%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# não servir arquivos internos
+<FilesMatch "^\.|\.(md|sql|bak|log|lock)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# o vídeo da abertura precisa de Range (seek pela rolagem): Apache e LiteSpeed já enviam Accept-Ranges
+<IfModule mod_mime.c>
+  AddType video/mp4 .mp4
+  AddType font/woff2 .woff2
+  AddType image/webp .webp
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType text/javascript "access plus 1 week"
+  # os nomes hero-1080.mp4 e hero-720.mp4 não mudam quando o vídeo é refeito: cache curto
+  ExpiresByType video/mp4 "access plus 1 week"
+  ExpiresByType application/json "access plus 1 hour"
+</IfModule>
+
+# comprime texto; não comprime mp4/webp/woff2 (já são compactados)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json image/svg+xml
+</IfModule>
