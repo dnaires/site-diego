@@ -116,7 +116,15 @@ p{margin:0 0 1.1em}
 .hero--video .hero__stage{background:var(--fundo,#000)}
 .hero--video .hero__stage::before,.hero--video .hero__canvas,.hero--video .hero__logo{display:none}
 .hero--video .hero__video{display:block;position:absolute;left:50%;top:calc((100svh - var(--reserva) - var(--vh))/2);translate:-50% 0;height:var(--vh);aspect-ratio:9/16;z-index:1}
-.hero--video .hero__video video{display:block;width:100%;height:100%}
+.hero--video .hero__video video{display:block;width:100%;height:100%;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 13%,#000 87%,transparent),linear-gradient(transparent,#000 8%,#000 90%,transparent);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent,#000 13%,#000 87%,transparent),linear-gradient(transparent,#000 8%,#000 90%,transparent);
+  mask-composite:intersect}  /* bordas do 9:16 esfumadas no fundo */
+/* brilho atrás do vídeo com a cor das laterais do quadro (manifest.borda): quando o meio fica carmim e o canto
+   ainda está escuro, a luz se espalha para os lados em vez de formar um retângulo */
+.hero--video .hero__video::before{content:"";position:absolute;inset:-22% -70%;z-index:-1;pointer-events:none;
+  background:radial-gradient(closest-side,var(--borda,transparent) 32%,transparent 100%)}
 .hero__wordmark{position:absolute;left:50%;top:88%;width:70%;translate:-50% 0;opacity:0}
 .hero--video .hero__sub{position:absolute;left:0;right:0;bottom:14px;margin:0 auto;z-index:2}
 .hero--video .oracao{text-shadow:0 0 14px rgba(0,0,0,.85)}
@@ -174,6 +182,7 @@ p{margin:0 0 1.1em}
 /* pilares */
 .pilares__cab{width:fit-content;max-width:100%}
 .pilares__titulo{margin-bottom:1rem}
+#pilares{overflow-x:clip}  /* entre 900 e ~1070px um adorno da cruz passava da borda e criava rolagem lateral */
 .pilares__kicker{text-align:right;margin:0 -.26em .6rem 0;font-size:.72rem;letter-spacing:.26em}
 @media(min-width:720px){.pilares__titulo{white-space:nowrap}}
 .cruz{display:grid;gap:clamp(16px,2.4vw,28px);margin-top:1.4rem;grid-template-areas:"c" "a" "b" "d" "e"}

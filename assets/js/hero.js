@@ -8,7 +8,7 @@
   'use strict';
   var S = window.SiteDiego;
   var hero = document.getElementById('inicio');
-  if (!S || !hero || S.reduced || !window.gsap || !window.ScrollTrigger) return;
+  if (!S || !hero || S.reduced || !window.gsap || !window.ScrollTrigger) { if (hero) hero.classList.remove('hero--scrub'); return; }
 
   fetch('assets/hero/manifest.json')
     .then(function (r) { if (!r.ok) throw new Error('sem manifest'); return r.json(); })
@@ -17,7 +17,7 @@
 
   function iniciar(m) {
     var temVideo = !!(m && m.video && m.fundo && m.fundo.length > 1 && m.duration);
-    if (S.mobile && !temVideo) return;
+    if (S.mobile && !temVideo) { hero.classList.remove('hero--scrub'); return; }
 
     var stage = hero.querySelector('.hero__stage');
     var canvas = document.getElementById('hero-canvas');
@@ -49,6 +49,7 @@
       vid.src = 'assets/hero/' + (S.mobile ? m.video.mobile : m.video.desktop);
       caixa.insertBefore(vid, caixa.firstChild);
       hero.style.setProperty('--fundo', m.fundo[0]);
+      if (m.borda) hero.style.setProperty('--borda', m.borda[0]);
     }
     function mostraVideo(i) {
       if (i === atual) return;
@@ -56,6 +57,7 @@
       var t = (i + 0.5) / (m.fps || 24);                 // meio do quadro: cai sempre no quadro certo
       if (vid.readyState > 0 && Math.abs(vid.currentTime - t) > 0.001) vid.currentTime = t;
       hero.style.setProperty('--fundo', m.fundo[Math.min(i, m.fundo.length - 1)]);
+      if (m.borda) hero.style.setProperty('--borda', m.borda[Math.min(i, m.borda.length - 1)]);
     }
 
     /* ---- modo canvas (quadros WebP) ---- */

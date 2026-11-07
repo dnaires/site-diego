@@ -45,11 +45,11 @@ O domínio `medicinacardeal.com.br` fica no **Registro.br** (zona DNS em modo av
 - [ ] **Criar o subdomínio na Hostinger e o DNS no Registro.br** (seção 2) e enviar o pacote.
 - [x] Endereço, horários, telefone e WhatsApp: são os da Medicina Cardeal (já no site e no JSON-LD).
 - [x] **Vídeo da abertura:** pronto em `assets/hero/` (ver `CLAUDE.md`).
-- [ ] **Conteúdo da consulta** (seção `#consulta`) e demais títulos do Dr. Diego.
+- [x] **Conteúdo da consulta** (seção `#consulta`) e demais títulos do Dr. Diego.
 - [ ] **Relação com a Medicina Cardeal:** confirmar o texto do bloco e preencher o link de volta (seção 5).
-- [ ] **Revisão do Dr. Diego** de todos os trechos marcados `RASCUNHO`.
+- [x] **Revisão do Dr. Diego** de todos os trechos marcados `RASCUNHO` (07/11).
 - [ ] **Fotos:** aprovar as usadas (`diego-sorriso-jaleco`, `diego-retrato`) e decidir se as de fundo escuro entram.
 - [ ] **Número "cem mil batidas por dia":** só entra com fonte.
-- [ ] **Privacidade (LGPD):** revisão jurídica de `privacidade.html`; e-mail de contato; o mapa do Google carrega direto e deve constar na política.
+- [x] **Privacidade (LGPD):** `privacidade.html` completa em 07/11 (responsável, registros do servidor, WhatsApp, mapa só ao clique, direitos, contato contato@medicinacardeal.com.br). Revisão por advogado continua recomendável.
 - [ ] **Métricas:** se houver analytics, atualizar a política e o aviso de cookies antes.
 - [ ] **Lighthouse** (LCP < 2,5 s em 4G, acessibilidade) e **teste em celular real**.

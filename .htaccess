@@ -47,7 +47,7 @@ DirectoryIndex index.html
   ExpiresByType text/css "access plus 1 week"
   ExpiresByType application/javascript "access plus 1 week"
   ExpiresByType text/javascript "access plus 1 week"
-  # os nomes hero-1080.mp4 e hero-720.mp4 não mudam quando o vídeo é refeito: cache curto
+  # os nomes hero-1080.mp4 e hero-540.mp4 não mudam quando o vídeo é refeito: cache curto
   ExpiresByType video/mp4 "access plus 1 week"
   ExpiresByType application/json "access plus 1 hour"
 </IfModule>

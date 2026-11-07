@@ -2,9 +2,10 @@
 Uso: python codificar_scroll.py <video_final.mp4> [--crf-desktop 26] [--crf-mobile 24]
 Gera em assets/hero/:
   hero-1080.mp4  1080x1920, H.264 all-intra (keyframe em todo quadro), sem áudio, para telas grandes
-  hero-720.mp4   720x1280, mesma receita, para celulares
+  hero-540.mp4   540x960, mesma receita, para celulares (07/11: era 720p com 9,5 MB; 540p crf 27 = 4,9 MB)
   poster.webp    último quadro (estático para movimento reduzido)
-  manifest.json  {video:{desktop,mobile}, width, height, fps, count, duration, fundo:[#rrggbb por quadro]}
+  manifest.json  {video:{desktop,mobile}, width, height, fps, count, duration, fundo:[#rrggbb por quadro],
+                  borda:[#rrggbb por quadro, cor das laterais do meio do quadro, para o brilho atrás do vídeo]}
 O campo fundo guarda a cor do canto superior esquerdo de cada quadro; a página pinta o fundo da seção com
 essa cor, então a lateral acompanha a troca de preto para #9D2235 sem ajuste manual.
 Por que all-intra: com -g 1 todo quadro é keyframe, então rolar para trás (buscar um quadro qualquer)
@@ -48,12 +49,34 @@ def fundos(video: Path) -> list[str]:
     return ["#%02x%02x%02x" % tuple(raw[i:i + 3]) for i in range(0, len(raw) - 2, 3)]
 
 
+def bordas(video: Path) -> list[str]:
+    """Cor média das faixas laterais (6% da largura, 30% a 70% da altura) de cada quadro, esquerda e direita
+    juntas. A página usa essa cor num brilho atrás do vídeo, para a borda do 9:16 não aparecer como um retângulo
+    quando o meio do quadro é claro e o canto é escuro."""
+    def faixa(x: str) -> bytes:
+        return subprocess.run(["ffmpeg", "-v", "error", "-i", str(video), "-an",
+                               "-vf", f"crop=iw*0.06:ih*0.4:{x}:ih*0.3,scale=1:1:flags=area",
+                               "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], capture_output=True, check=True).stdout
+    e, d = faixa("0"), faixa("iw*0.94")
+    return ["#%02x%02x%02x" % tuple((e[i + k] + d[i + k]) // 2 for k in range(3)) for i in range(0, len(e) - 2, 3)]
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("video", type=Path)
+    ap.add_argument("video", type=Path, nargs="?")
     ap.add_argument("--crf-desktop", type=int, default=26)
-    ap.add_argument("--crf-mobile", type=int, default=24)
+    ap.add_argument("--crf-mobile", type=int, default=27)
+    ap.add_argument("--so-bordas", action="store_true",
+                    help="só recalcula 'borda' no manifest atual, a partir do vídeo de celular do manifest (sem recodificar)")
     a = ap.parse_args()
+    if a.so_bordas:
+        man = json.loads((DEST / "manifest.json").read_text(encoding="utf-8"))
+        man["borda"] = bordas(DEST / man["video"]["mobile"])
+        (DEST / "manifest.json").write_text(json.dumps(man, separators=(",", ":")), encoding="utf-8")
+        print(f"borda: {len(man['borda'])} quadros ({man['count']} no manifest). Rode empacotar.py em seguida.")
+        return
+    if not a.video:
+        ap.error("informe o vídeo final (ou use --so-bordas)")
 
     info = sonda(a.video)
     if (info["w"], info["h"]) != (1080, 1920):
@@ -62,7 +85,7 @@ def main() -> None:
     for velho in DEST.glob("frame_*.webp"):
         velho.unlink()
     pesos = {}
-    for nome, larg, crf in (("hero-1080.mp4", 1080, a.crf_desktop), ("hero-720.mp4", 720, a.crf_mobile)):
+    for nome, larg, crf in (("hero-1080.mp4", 1080, a.crf_desktop), ("hero-540.mp4", 540, a.crf_mobile)):
         pesos[nome] = codifica(a.video, DEST / nome, larg, crf)
         print(f"{nome}: {pesos[nome] / 1048576:.1f} MB (crf {crf})")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-sseof", "-0.5", "-i", str(a.video), "-an", "-update", "1",
@@ -70,8 +93,8 @@ def main() -> None:
     Image.open(DEST / "_ultimo.png").convert("RGB").save(DEST / "poster.webp", quality=88, method=6)
     (DEST / "_ultimo.png").unlink()
     f = fundos(a.video)
-    manifest = {"video": {"desktop": "hero-1080.mp4", "mobile": "hero-720.mp4"}, "width": 1080, "height": 1920,
-                "fps": info["fps"], "count": len(f), "duration": info["dur"], "fundo": f}
+    manifest = {"video": {"desktop": "hero-1080.mp4", "mobile": "hero-540.mp4"}, "width": 1080, "height": 1920,
+                "fps": info["fps"], "count": len(f), "duration": info["dur"], "fundo": f, "borda": bordas(a.video)}
     (DEST / "manifest.json").write_text(json.dumps(manifest, separators=(",", ":")), encoding="utf-8")
     print(f"{len(f)} quadros, {info['dur']:.2f} s, fundo {f[0]} -> {f[-1]}. Rode empacotar.py em seguida.")
 

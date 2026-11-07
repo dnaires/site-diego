@@ -27,6 +27,7 @@
  "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"08:00","closes":"12:00"}],
  "sameAs":["https://www.instagram.com/dnaires/"]}
 </script>
+<!-- sem preload do poster/manifest: testado em 07/11, adianta o vídeo e piora o bloqueio da página (TBT) -->
 <script>
   /* html.js só existe com JS; failsafe de 3 s revela tudo se o script principal falhar */
   document.documentElement.classList.add('js');
@@ -39,13 +40,13 @@
 <header class="header">
   <div class="container">
     <a class="header__logo" href="#inicio" aria-label="Dr. Diego Aires, início">
-      <img src="assets/logo/logo-negativa-horizontal.webp" width="1800" height="598" alt="Dr. Diego Aires, Cardiologista">
+      <img src="assets/logo/logo-negativa-horizontal-480.webp" width="480" height="159" alt="Dr. Diego Aires, Cardiologista">
     </a>
     <nav class="nav" aria-label="Principal">
-      <a href="#origem">Origem</a>
-      <a href="#camadas">O coração</a>
-      <a href="#pilares">Pilares</a>
+      <a href="#origem">Sobre</a>
       <a href="#consulta">Consulta</a>
+      <a href="#acompanhamento">Acompanhamento</a>
+      <a href="#camadas">O coração</a>
       <a href="#fe">Ciência e fé</a>
     </nav>
     <a class="btn btn--claro" href="https://wa.me/5561984026331?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Diego%20Aires%20na%20Medicina%20Cardeal." target="_blank" rel="noopener">Agende sua consulta</a>
@@ -55,11 +56,13 @@
 <main>
 <!-- 1. ABERTURA -->
 <section class="hero" id="inicio" aria-label="Abertura">
+  <script>/* layout da abertura em scroll já no primeiro desenho (evita o salto do título; hero.js tira a classe se desistir) */
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.getElementById('inicio').classList.add('hero--scrub');</script>
   <div class="hero__stage">
     <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
     <!-- Vídeo 9:16 (criado por hero.js) centralizado, sem corte lateral; o texto do logo entra em fade sobre o último quadro -->
-    <div class="hero__video" id="hero-video" hidden aria-hidden="true"><img class="hero__wordmark" src="assets/logo/wordmark-negativa.webp" width="1600" height="336" loading="lazy" alt=""></div>
-    <img class="hero__logo" src="assets/logo/logo-negativa-vertical.webp" width="1200" height="1119" alt="Dr. Diego Aires, Cardiologista. Símbolo: coração em chamas">
+    <div class="hero__video" id="hero-video" hidden aria-hidden="true"><img class="hero__wordmark" src="assets/logo/wordmark-negativa-800.webp" srcset="assets/logo/wordmark-negativa-800.webp 800w, assets/logo/wordmark-negativa.webp 1600w" sizes="470px" width="1600" height="336" loading="lazy" alt=""></div>
+    <img class="hero__logo" src="assets/logo/logo-negativa-vertical-600.webp" srcset="assets/logo/logo-negativa-vertical-600.webp 600w, assets/logo/logo-negativa-vertical.webp 1200w" sizes="(max-width: 820px) 90vw, 420px" width="1200" height="1119" loading="lazy" alt="Dr. Diego Aires, Cardiologista. Símbolo: coração em chamas">
     <!-- Título e convite para rolar: visíveis no primeiro quadro, somem quando o vídeo começa (hero.js) -->
     <div class="hero__intro" id="hero-intro">
       <h1 class="hero__titulo">Dr. Diego Aires, cardiologista em Brasília</h1>
@@ -87,76 +90,33 @@
 <section class="sec sec--claro" id="origem">
   <div class="container origem">
     <figure class="origem__foto reveal" style="margin:0">
-      <img src="assets/img/diego-sorriso-jaleco.webp" width="1200" height="1800" loading="lazy" alt="Dr. Diego Aires, cardiologista, de jaleco branco e estetoscópio, sorrindo">
+      <img src="assets/img/diego-sorriso-jaleco-700.webp" srcset="assets/img/diego-sorriso-jaleco-700.webp 700w, assets/img/diego-sorriso-jaleco.webp 1200w" sizes="(min-width: 900px) 440px, 90vw" width="1200" height="1800" loading="lazy" alt="Dr. Diego Aires, cardiologista, de jaleco branco e estetoscópio, sorrindo">
     </figure>
     <div class="origem__texto">
       <h2 class="reveal">Dr. Diego Aires</h2>
       <p class="cred reveal">CRM-DF 19878 · RQE 15628 (Cardiologia) · RQE 13972 (Clínica Médica)</p>
       <!-- Texto do Dr. Diego (30/10/2026), condensado em 31/10/2026 -->
       <!-- 06/11: o trecho sobre Corrente (PI) e Goiânia saiu a pedido do Dr. Diego -->
-      <p class="lead reveal">Foram dez anos de UTI, desde 2016. Ali vi onde termina a doença do coração. Hoje trabalho para que ela não comece.</p>
+      <p class="lead reveal">São dez anos de UTI, desde 2016. Ali vi onde termina a doença do coração. Hoje trabalho para que ela não comece.</p>
       <h3 class="trajeto__titulo reveal">Formação e trajetória</h3>
-      <!-- TODO: confirmar com o Dr. Diego: fim do período na UTI (2026) e se o cargo de assessor do APH também começa em 2022 -->
+      <!-- 07/11: confirmado pelo Dr. Diego: segue na UTI ("2016 a hoje"); CBMDF como cardiologista em 2022 e assessor do APH em 2023 -->
       <ol class="trajeto reveal">
         <li><span class="ano">2006 a 2011</span><span><strong>Medicina</strong>Universidade Federal de Goiás (UFG)</span></li>
         <li><span class="ano">2013 a 2015</span><span><strong>Residência em Clínica Médica</strong>Hospital Regional da Asa Norte (HRAN), Brasília</span></li>
         <li><span class="ano">2015 a 2017</span><span><strong>Residência em Cardiologia</strong>Hospital de Base do Distrito Federal (HBDF), Brasília</span></li>
-        <li><span class="ano">2016 a 2026</span><span><strong>UTI</strong>Hospital Santa Lúcia Sul, Brasília</span></li>
-        <li><span class="ano">2022 a hoje</span><span><strong>Cardiologista e assessor médico do serviço de APH</strong>Corpo de Bombeiros Militar do DF (CBMDF)</span></li>
+        <li><span class="ano">2016 a hoje</span><span><strong>UTI</strong>Hospital Santa Lúcia Sul, Brasília</span></li>
+        <li><span class="ano">2022 a hoje</span><span><strong>Cardiologista</strong>Corpo de Bombeiros Militar do DF (CBMDF)</span></li>
+        <li><span class="ano">2023 a hoje</span><span><strong>Assessor médico do serviço de APH</strong>Corpo de Bombeiros Militar do DF (CBMDF)</span></li>
         <li><span class="ano">Hoje</span><span><strong>Consultas particulares</strong>Medicina Cardeal, Asa Sul, Brasília</span></li>
       </ol>
     </div>
   </div>
 </section>
 
-<!-- 3. O CORAÇÃO EM DUAS CAMADAS -->
-<section class="sec sec--carmim" id="camadas">
-  <div class="container">
-    <h2 class="reveal">O coração em duas camadas</h2>
-    <div class="camadas">
-      <div class="camadas__col reveal">
-        <h3>O coração que bate</h3>
-        <p>Músculo, ritmo, pressão, artérias. Trato com ciência, diretriz e exame que muda conduta.</p>
-        <ul><li>Ritmo</li><li>Pressão</li><li>Artérias</li></ul>
-      </div>
-      <!-- 06/11: o negativo sobre o carmim foi recusado; escolhido pelo Dr. Diego: a gravura em positivo, num painel claro.
-           FONTE: Niccolò Ricciolini, "Tab. IV", Fig. I, desenhada e gravada em Roma em 1703 ("Nic. Ricciolinus del. et sculp. Romae 1703").
-           Em Giovanni Maria Lancisi, De motu cordis et aneurysmatibus, Roma: Salvioni, 1728. Wellcome Collection (b30456599, imagem 0185), Public Domain Mark. -->
-      <figure class="camadas__centro camadas__centro--claro reveal">
-        <img class="camadas__arte" src="assets/art/ricciolini-fig1-positivo.webp" width="725" height="1400" loading="lazy" alt="Gravura anatômica de 1703 (Fig. I): coração visto de frente, com traqueia e grandes vasos, legendado com letras, em traço vinho sobre papel claro">
-        <figcaption class="camadas__legenda">Niccolò Ricciolini, 1703. Em G. M. Lancisi, <em>De motu cordis et aneurysmatibus</em>, Roma, 1728.</figcaption>
-      </figure>
-      <div class="camadas__col camadas__col--dir reveal">
-        <h3>O coração que decide</h3>
-        <p>Na tradição clássica, o coração é o centro da pessoa, onde razão, vontade e afeto se encontram.</p>
-        <ul><li>Razão</li><li>Vontade</li><li>Afeto</li></ul>
-      </div>
-    </div>
-    <blockquote class="camadas__frase reveal">A medicina mede o que o coração faz. A filosofia pergunta para que ele bate. Eu não abro mão de nenhuma das duas.</blockquote>
-  </div>
-</section>
-
-<!-- 4. QUATRO PILARES -->
-<section class="sec sec--claro" id="pilares">
-  <div class="container">
-    <!-- 06/11: fé como assinatura; o título deixou de ser "Uma cruz, com o coração ao centro." (a forma da cruz continua no desenho) -->
-    <div class="pilares__cab"><h2 class="reveal pilares__titulo">Quatro pilares, com o coração ao centro.</h2></div>
-    <!-- RASCUNHO: parágrafos curtos, sem promessas. Pensadores citados dentro do texto, sem destaque (pedido de 06/11): Aristóteles (Razão), Viktor Frankl (Emoção), Tomás de Aquino (Espírito) -->
-    <div class="cruz">
-      <span class="cruz__forma" aria-hidden="true"><span class="cruz__v"></span><span class="cruz__h"></span></span>
-      <div class="cruz__centro reveal"><img src="assets/logo/icone.webp" width="645" height="900" loading="lazy" alt="Símbolo da marca Dr. Diego Aires: coração em chamas"></div>
-      <article class="pilar pilar--corpo reveal"><h3>Corpo</h3><p>Cardiologia preventiva baseada em evidência. Risco que se mede, conduta que se justifica.</p></article>
-      <article class="pilar pilar--razao reveal"><h3>Razão</h3><p>Desde Aristóteles, aprendemos a pensar com ordem. A conduta clínica precisa de uma razão que se possa explicar.</p></article>
-      <article class="pilar pilar--emocao reveal"><h3>Emoção</h3><p>Viktor Frankl mostrou que o ser humano busca sentido, e sentido também importa para a saúde. Por isso, tempo e vínculo com o paciente.</p></article>
-      <article class="pilar pilar--espirito reveal"><h3>Espírito</h3><p>Fé e razão não se contradizem, como ensinou Tomás de Aquino. Todo paciente é acolhido como irmão.</p></article>
-    </div>
-  </div>
-</section>
-
-<!-- 5. CONSULTA -->
+<!-- 3. CONSULTA (logo depois da Origem desde 07/11: quem quer marcar vê como funciona antes das seções conceituais) -->
 <section class="sec sec--bege" id="consulta">
   <!-- Conteúdo da consulta confirmado pelo Dr. Diego em 06/11/2026: 1h a 1h30, medicina do estilo de vida
-       com os 6 pilares, questionários de saúde, nota no Mapa da Saúde ao final. Periodicidade, recibo para
+       com os 6 pilares, questionários de saúde, Mapa da Saúde ao final (07/11: sem a palavra "nota", a pedido dele). Periodicidade, recibo para
        reembolso e valores NÃO entram no site: a secretária explica pelo WhatsApp. -->
   <div class="container consulta">
     <header class="consulta__intro">
@@ -167,16 +127,18 @@
       <li><span class="passos__num">1</span><h3>Sua história</h3><p>Sintomas, doenças, remédios, exames e a saúde da sua família.</p></li>
       <li><span class="passos__num">2</span><h3>Questionários de saúde</h3><p>Os que se aplicam ao seu caso, respondidos durante a consulta.</p></li>
       <li><span class="passos__num">3</span><h3>Os seis pilares do estilo de vida</h3><p>Alimentação, atividade física, sono, estresse, relacionamentos e uso de álcool, tabaco e outras substâncias.</p></li>
-      <li><span class="passos__num">4</span><h3>Mapa da Saúde</h3><p>No fim da consulta, você recebe a sua nota no Mapa da Saúde: onde você está hoje e por onde começar.</p></li>
+      <li><span class="passos__num">4</span><h3>Mapa da Saúde</h3><p>No fim da consulta, você recebe o Mapa da Saúde: onde você está hoje e por onde começar.</p></li>
     </ol>
     <div class="consulta__base">
     <aside class="levar-box reveal" aria-labelledby="levar-titulo">
       <h3 id="levar-titulo">O que levar</h3>
-      <!-- RASCUNHO: itens genéricos de uma primeira consulta; o Dr. Diego confirma ou ajusta -->
+      <!-- Aprovado pelo Dr. Diego em 07/11, com os dois últimos itens incluídos a pedido dele -->
       <ul class="levar">
         <li>Exames anteriores, mesmo os antigos.</li>
         <li>A lista dos remédios que você usa, com as doses.</li>
         <li>Casos de doença do coração na família, com a idade em que apareceram.</li>
+        <li>As medidas de pressão feitas em casa, se você tiver.</li>
+        <li>Suas dúvidas anotadas, para não esquecer nenhuma.</li>
       </ul>
     </aside>
     <div class="acomp reveal" id="acompanhamento">
@@ -193,16 +155,62 @@
   </div>
 </section>
 
+<!-- 4. O CORAÇÃO EM DUAS CAMADAS -->
+<section class="sec sec--carmim" id="camadas">
+  <div class="container">
+    <h2 class="reveal">O coração em duas camadas</h2>
+    <div class="camadas">
+      <div class="camadas__col reveal">
+        <h3>O coração que bate</h3>
+        <p>Músculo, ritmo, pressão, artérias. Trato com ciência, diretriz e exame que muda conduta.</p>
+        <ul><li>Ritmo</li><li>Pressão</li><li>Artérias</li></ul>
+      </div>
+      <!-- 06/11: o negativo sobre o carmim foi recusado; escolhido pelo Dr. Diego: a gravura em positivo, num painel claro.
+           FONTE: Niccolò Ricciolini, "Tab. IV", Fig. I, desenhada e gravada em Roma em 1703 ("Nic. Ricciolinus del. et sculp. Romae 1703").
+           Em Giovanni Maria Lancisi, De motu cordis et aneurysmatibus, Roma: Salvioni, 1728. Wellcome Collection (b30456599, imagem 0185), Public Domain Mark. -->
+      <figure class="camadas__centro camadas__centro--claro reveal">
+        <img class="camadas__arte" src="assets/art/ricciolini-fig1-positivo-460.webp" srcset="assets/art/ricciolini-fig1-positivo-460.webp 460w, assets/art/ricciolini-fig1-positivo.webp 725w" sizes="(min-width: 900px) 230px, 340px" width="725" height="1400" loading="lazy" alt="Gravura anatômica de 1703 (Fig. I): coração visto de frente, com traqueia e grandes vasos, legendado com letras, em traço vinho sobre papel claro">
+        <figcaption class="camadas__legenda">Niccolò Ricciolini, 1703. Em G. M. Lancisi, <em>De motu cordis et aneurysmatibus</em>, Roma, 1728.</figcaption>
+      </figure>
+      <div class="camadas__col camadas__col--dir reveal">
+        <h3>O coração que decide</h3>
+        <p>Na tradição clássica, o coração é o centro da pessoa, onde razão, vontade e afeto se encontram.</p>
+        <ul><li>Razão</li><li>Vontade</li><li>Afeto</li></ul>
+      </div>
+    </div>
+    <blockquote class="camadas__frase reveal">A medicina mede o que o coração faz. A filosofia pergunta para que ele bate. Eu não abro mão de nenhuma das duas.</blockquote>
+  </div>
+</section>
+
+<!-- 5. QUATRO PILARES -->
+<section class="sec sec--claro" id="pilares">
+  <div class="container">
+    <!-- 06/11: fé como assinatura; o título deixou de ser "Uma cruz, com o coração ao centro." (a forma da cruz continua no desenho) -->
+    <div class="pilares__cab"><h2 class="reveal pilares__titulo">Quatro pilares, com o coração ao centro.</h2></div>
+    <!-- Aprovado pelo Dr. Diego em 07/11. Parágrafos curtos, sem promessas. Pensadores citados dentro do texto, sem destaque (pedido de 06/11): Aristóteles (Razão), Viktor Frankl (Emoção), Tomás de Aquino (Espírito). 07/11: Corpo reescrito com Hipócrates (o Dr. Diego achou o anterior fraco); Razão, Emoção e Espírito aprovados -->
+
+    <div class="cruz">
+      <span class="cruz__forma" aria-hidden="true"><span class="cruz__v"></span><span class="cruz__h"></span></span>
+      <div class="cruz__centro reveal"><img src="assets/logo/icone.webp" width="645" height="900" loading="lazy" alt="Símbolo da marca Dr. Diego Aires: coração em chamas"></div>
+      <article class="pilar pilar--corpo reveal"><h3>Corpo</h3><p>Hipócrates já cuidava do modo de viver do paciente. Hoje isso tem nome, medicina do estilo de vida, e se acompanha com evidência: pressão, colesterol, sono e movimento.</p></article>
+      <article class="pilar pilar--razao reveal"><h3>Razão</h3><p>Desde Aristóteles, aprendemos a pensar com ordem. A conduta clínica precisa de uma razão que se possa explicar.</p></article>
+      <article class="pilar pilar--emocao reveal"><h3>Emoção</h3><p>Viktor Frankl mostrou que o ser humano busca sentido, e sentido também importa para a saúde. Por isso, tempo e vínculo com o paciente.</p></article>
+      <article class="pilar pilar--espirito reveal"><h3>Espírito</h3><p>Fé e razão não se contradizem, como ensinou Tomás de Aquino. Todo paciente é acolhido como irmão.</p></article>
+    </div>
+  </div>
+</section>
+
 <!-- 6. CIÊNCIA E FÉ -->
-<section class="sec sec--claro" id="fe">
+<section class="sec sec--bege" id="fe">
   <div class="container fe">
     <figure class="fe__retrato reveal" style="margin:0">
-      <img src="assets/img/diego-retrato.webp" width="1200" height="1800" loading="lazy" alt="Retrato do Dr. Diego Aires, cardiologista, de terno e gravata">
+      <img src="assets/img/diego-retrato-700.webp" srcset="assets/img/diego-retrato-700.webp 700w, assets/img/diego-retrato.webp 1200w" sizes="(min-width: 900px) 420px, 90vw" width="1200" height="1800" loading="lazy" alt="Retrato do Dr. Diego Aires, cardiologista, de terno e gravata">
     </figure>
     <div>
       <blockquote class="citacao reveal">“Fizeste-nos para ti, e inquieto está o nosso coração enquanto não repousa em ti.”<cite>Santo Agostinho, Confissões, livro I, cap. 1</cite></blockquote>
-      <!-- RASCUNHO: tom de testemunho, não de pregação -->
-      <p class="lead reveal">Sou cardiologista e sou Cristão.</p>
+      <!-- 07/11: a versão completa (duas frases de Confissões I,1) foi testada e recusada; o Dr. Diego prefere esta, curta -->
+      <!-- Aprovado pelo Dr. Diego em 07/11 (tom de testemunho, não de pregação) -->
+      <p class="lead reveal">Sou cardiologista e sou cristão.</p>
       <p class="reveal">A fé não substitui o diagnóstico, mas nenhum diagnóstico basta para explicar uma pessoa.</p>
       <!-- 06/11: Pascal e Ezequiel saíram (fé como assinatura: uma citação só nesta seção) -->
     </div>
@@ -213,8 +221,9 @@
 <section class="sec sec--carmim" id="conteudo">
   <div class="container conteudo">
     <div class="conteudo__texto">
-      <p class="kicker reveal">Conteúdo</p>
       <h2 class="reveal">Escrevo e gravo sobre o coração em todas as suas camadas.</h2>
+      <!-- 07/11: frase de apoio no lugar do rótulo "Conteúdo", aprovada pelo Dr. Diego (pode rever no computador) -->
+      <p class="reveal">No Instagram, explico em linguagem simples o que a ciência diz sobre prevenção, exames e estilo de vida.</p>
       <p class="reveal"><a class="btn btn--claro" href="https://www.instagram.com/dnaires/" rel="noopener" target="_blank">Seguir @dnaires no Instagram</a></p>
     </div>
     <!-- Captura do perfil @dnaires no Instagram (30/10/2026); funde no carmim da seção por máscara em CSS -->
@@ -256,7 +265,7 @@
   <img class="footer__marca" src="assets/art/mieris-visita-medico.webp" width="1000" height="1259" loading="lazy" alt="" aria-hidden="true">
   <div class="container">
     <div>
-      <img src="assets/logo/logo-negativa-vertical.webp" width="1200" height="1119" loading="lazy" alt="Dr. Diego Aires, Cardiologista">
+      <img src="assets/logo/logo-negativa-vertical-600.webp" srcset="assets/logo/logo-negativa-vertical-600.webp 600w, assets/logo/logo-negativa-vertical.webp 1200w" sizes="280px" width="1200" height="1119" loading="lazy" alt="Dr. Diego Aires, Cardiologista">
     </div>
     <div>
       <p class="cred"><strong>Dr. Diego Aires</strong><br>Médico cardiologista, Brasília-DF<br>CRM-DF 19878<br>RQE 15628 (Cardiologia) · RQE 13972 (Clínica Médica)</p>

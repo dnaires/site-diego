@@ -25,7 +25,8 @@
         var alvo = document.querySelector(a.getAttribute('href'));
         if (!alvo || a.getAttribute('aria-disabled') === 'true') return;
         e.preventDefault();
-        lenis.scrollTo(alvo, { offset: -64 });
+        // seções começam com respiro próprio; um bloco interno (ex.: #acompanhamento) precisa de folga abaixo do cabeçalho
+        lenis.scrollTo(alvo, { offset: alvo.tagName === 'SECTION' ? -64 : -96 });
       });
     });
   }
