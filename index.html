@@ -68,6 +68,8 @@
       <h1 class="hero__titulo">Dr. Diego Aires, cardiologista em Brasília</h1>
       <p class="hero__frase">Consultas particulares de 1h a 1h30, na Medicina Cardeal, Asa Sul, ou por telemedicina.</p>
       <p class="hero__dica"><span aria-hidden="true"></span>Role a página</p>
+      <!-- 07/11: atalho para quem não quer rolar a abertura inteira (vem do Google, quer marcar) -->
+      <a class="hero__pular" href="#origem">Pular a abertura</a>
     </div>
     <!-- Botões no fim do vídeo (desktop); no celular a barra fixa Agendar/Ligar faz esse papel -->
     <div class="hero__cta" id="hero-cta">
@@ -162,7 +164,7 @@
     <div class="camadas">
       <div class="camadas__col reveal">
         <h3>O coração que bate</h3>
-        <p>Músculo, ritmo, pressão, artérias. Trato com ciência, diretriz e exame que muda conduta.</p>
+        <p>Músculo, ritmo, pressão, artérias. Trato com ciência, diretrizes e só os exames que podem mudar o seu tratamento.</p>
         <ul><li>Ritmo</li><li>Pressão</li><li>Artérias</li></ul>
       </div>
       <!-- 06/11: o negativo sobre o carmim foi recusado; escolhido pelo Dr. Diego: a gravura em positivo, num painel claro.
@@ -179,6 +181,8 @@
       </div>
     </div>
     <blockquote class="camadas__frase reveal">A medicina mede o que o coração faz. A filosofia pergunta para que ele bate. Eu não abro mão de nenhuma das duas.</blockquote>
+    <!-- 07/11: frase que liga as duas camadas à consulta (aprovada pelo Dr. Diego) -->
+    <p class="camadas__ponte reveal">Na consulta, as duas camadas entram: os seus exames e o modo como você vive.</p>
   </div>
 </section>
 
@@ -194,7 +198,7 @@
       <div class="cruz__centro reveal"><img src="assets/logo/icone.webp" width="645" height="900" loading="lazy" alt="Símbolo da marca Dr. Diego Aires: coração em chamas"></div>
       <article class="pilar pilar--corpo reveal"><h3>Corpo</h3><p>Hipócrates já cuidava do modo de viver do paciente. Hoje isso tem nome, medicina do estilo de vida, e se acompanha com evidência: pressão, colesterol, sono e movimento.</p></article>
       <article class="pilar pilar--razao reveal"><h3>Razão</h3><p>Desde Aristóteles, aprendemos a pensar com ordem. A conduta clínica precisa de uma razão que se possa explicar.</p></article>
-      <article class="pilar pilar--emocao reveal"><h3>Emoção</h3><p>Viktor Frankl mostrou que o ser humano busca sentido, e sentido também importa para a saúde. Por isso, tempo e vínculo com o paciente.</p></article>
+      <article class="pilar pilar--emocao reveal"><h3>Emoção</h3><p>Viktor Frankl mostrou que o ser humano busca sentido, e sentido também importa para a saúde. Por isso, consultas longas, que respeitam a pessoa por inteiro e deixam tempo para todas as suas dúvidas.</p></article>
       <article class="pilar pilar--espirito reveal"><h3>Espírito</h3><p>Fé e razão não se contradizem, como ensinou Tomás de Aquino. Todo paciente é acolhido como irmão.</p></article>
     </div>
   </div>
@@ -224,10 +228,19 @@
       <h2 class="reveal">Escrevo e gravo sobre o coração em todas as suas camadas.</h2>
       <!-- 07/11: frase de apoio no lugar do rótulo "Conteúdo", aprovada pelo Dr. Diego (pode rever no computador) -->
       <p class="reveal">No Instagram, explico em linguagem simples o que a ciência diz sobre prevenção, exames e estilo de vida.</p>
-      <p class="reveal"><a class="btn btn--claro" href="https://www.instagram.com/dnaires/" rel="noopener" target="_blank">Seguir @dnaires no Instagram</a></p>
+      <p class="conteudo__botoes reveal">
+        <a class="btn btn--claro" href="https://wa.me/5561984026331?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Diego%20Aires%20na%20Medicina%20Cardeal." target="_blank" rel="noopener">Agendar consulta</a>
+        <a class="btn btn--vazado" href="https://www.instagram.com/dnaires/" rel="noopener" target="_blank">Seguir @dnaires</a>
+      </p>
     </div>
-    <!-- Captura do perfil @dnaires no Instagram (30/10/2026); funde no carmim da seção por máscara em CSS -->
-    <img class="conteudo__print reveal" src="assets/img/instagram-grade.webp" width="1124" height="654" loading="lazy" alt="Publicações do perfil @dnaires no Instagram: Dia do Médico, Coração disparou, Mama e coração, Medicina do Estilo de Vida">
+    <!-- 07/11: cartões de posts reais no lugar da captura do perfil (sem código do Instagram embutido: não traz rastreamento da Meta).
+         PARA TROCAR OS POSTS: em cada <li>, mude o link do reel, o título (h3) e a frase (p). Frase curta, sem promessa (CFM). -->
+    <ul class="posts reveal" aria-label="Publicações recentes no Instagram">
+      <li><a href="https://www.instagram.com/dnaires/reel/DfA9Vi7xqy5/" target="_blank" rel="noopener"><h3>Seu coração disparou</h3><p>Café, sono ruim e estresse explicam muitas palpitações. Mesmo assim, o coração precisa ser avaliado primeiro.</p><span>Ver no Instagram</span></a></li>
+      <li><a href="https://www.instagram.com/dnaires/reel/DeKz37CNE01/" target="_blank" rel="noopener"><h3>Exame normal não exclui infarto</h3><p>Por que uma placa pequena, que não aparece no exame de rotina, pode causar um infarto.</p><span>Ver no Instagram</span></a></li>
+      <li><a href="https://www.instagram.com/dnaires/reel/DfcyckOt9iP/" target="_blank" rel="noopener"><h3>Força muscular protege o coração</h3><p>O treino de força também entra na prevenção cardiovascular, não só o aeróbico.</p><span>Ver no Instagram</span></a></li>
+      <li><a href="https://www.instagram.com/dnaires/reel/DeuaEa5tSzF/" target="_blank" rel="noopener"><h3>Medicina do estilo de vida</h3><p>O que é essa área de atuação médica e quais são os seus seis pilares.</p><span>Ver no Instagram</span></a></li>
+    </ul>
   </div>
 </section>
 

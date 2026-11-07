@@ -1,7 +1,9 @@
 """Prepara o vídeo final da abertura para o scroll da página.
-Uso: python codificar_scroll.py <video_final.mp4> [--crf-desktop 26] [--crf-mobile 24]
+Uso: python codificar_scroll.py <video_final.mp4> [--crf-desktop 30] [--crf-mobile 27]
+(o vídeo final de 06/11 está em referencias/abertura_completa_v2.mp4)
 Gera em assets/hero/:
   hero-1080.mp4  1080x1920, H.264 all-intra (keyframe em todo quadro), sem áudio, para telas grandes
+                 (07/11: crf 26 = 13,5 MB; crf 30 = 9,6 MB, sem diferença visível em recorte 1:1)
   hero-540.mp4   540x960, mesma receita, para celulares (07/11: era 720p com 9,5 MB; 540p crf 27 = 4,9 MB)
   poster.webp    último quadro (estático para movimento reduzido)
   manifest.json  {video:{desktop,mobile}, width, height, fps, count, duration, fundo:[#rrggbb por quadro],
@@ -64,7 +66,7 @@ def bordas(video: Path) -> list[str]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("video", type=Path, nargs="?")
-    ap.add_argument("--crf-desktop", type=int, default=26)
+    ap.add_argument("--crf-desktop", type=int, default=30)
     ap.add_argument("--crf-mobile", type=int, default=27)
     ap.add_argument("--so-bordas", action="store_true",
                     help="só recalcula 'borda' no manifest atual, a partir do vídeo de celular do manifest (sem recodificar)")
