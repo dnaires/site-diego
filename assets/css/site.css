@@ -139,6 +139,17 @@ p{margin:0 0 1.1em}
 @media(max-width:768px){
   .hero--video{--reserva:150px}
   .hero--video .hero__sub{bottom:64px;max-width:38ch;padding-inline:var(--gutter)}
+  /* 08/11: no iPhone o título ficava em cima do coração. O vídeo agora começa logo abaixo do cabeçalho (o topo do
+     quadro é preto, o título cabe ali) e reserva --base embaixo: faixa para "Role a página"/"Pular" no início e
+     para as especialidades no fim, acima da barra Agendar/Ligar (56px). */
+  .hero--video{--base:130px;--vh:min(calc(100svh - var(--header-h) - var(--base)),calc(100vw*16/9))}
+  .hero--video .hero__video{top:var(--header-h)}
+  .hero--video .oracao{bottom:calc(var(--base) + 4px)}
+  .hero--video .hero__sub{bottom:60px}
+  .hero--scrub .hero__intro{bottom:64px;display:grid;grid-template-columns:auto auto;justify-content:center;align-content:space-between;align-items:center;column-gap:1.6rem}
+  .hero--scrub .hero__titulo{grid-column:1/-1;margin:0}
+  .hero--scrub .hero__dica span{height:22px}
+  .hero--scrub .hero__pular{margin:0}
 }
 
 /* origem */
@@ -244,6 +255,7 @@ p{margin:0 0 1.1em}
 .acomp h3{color:#fff;margin-bottom:.5em}
 .acomp p{margin:0;max-width:52ch}
 .acomp__botoes{display:flex;flex-wrap:wrap;gap:12px}
+@media(max-width:600px){.acomp__botoes{flex-direction:column}.acomp__botoes .btn{justify-content:center;text-align:center;width:100%}}  /* celular: os dois do mesmo tamanho */
 @media(max-width:599px){.passos{gap:10px}.passos li{display:grid;grid-template-columns:2.2rem 1fr;column-gap:.7rem;padding:1rem 1.1rem}.passos__num{grid-row:span 2;font-size:1.9rem;margin:0}}
 @media(min-width:600px){.passos{grid-template-columns:1fr 1fr}}
 @media(min-width:1000px){.passos{grid-template-columns:repeat(4,1fr)}}
@@ -332,6 +344,7 @@ p{margin:0 0 1.1em}
 .footer .cred{border:0;padding:0;margin:0}
 .footer .cred strong{font:600 1.15rem var(--f-titulo);color:var(--bege);letter-spacing:.02em}
 .footer .aviso{max-width:none;opacity:.85;font-size:.85rem}
+.footer .footer__obra{grid-column:1/-1;font-size:.72rem;line-height:1.5;letter-spacing:.02em;opacity:.65}
 .footer .footer__tel{font:600 1.3rem var(--f-titulo);letter-spacing:.02em;text-decoration:none}
 .footer .footer__wa{display:inline-block;margin-top:.9rem;color:var(--escuro)}
 .footer .versiculo strong{font-family:var(--f-titulo);color:var(--bege);font-weight:600;font-size:1.25em;letter-spacing:.03em}
@@ -344,6 +357,7 @@ p{margin:0 0 1.1em}
   .footer .versiculo{grid-column:2/-1;grid-row:2;max-width:none}
   .footer .container>div:nth-child(2)>p:nth-child(3){grid-row:2}
   .footer .aviso{grid-column:1/-1;grid-row:3;margin-top:-.6rem}
+  .footer .footer__obra{grid-row:4;margin-top:-1rem}
   .footer .container>div:nth-child(2)>p:nth-child(3),.footer .versiculo{padding-top:1.2rem;border-top:1px solid rgba(217,200,157,.25)}
   .footer .container>div:nth-child(2)>p:nth-child(3){grid-column:1}
 }
