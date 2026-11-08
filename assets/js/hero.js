@@ -57,9 +57,24 @@
       vid.addEventListener('loadedmetadata', posiciona);
       vid.addEventListener('loadeddata', posiciona);
       destrava();
+      armaToque();
+      /* Ao sair para o WhatsApp e voltar, o iPhone suspende o vídeo (ou devolve a página do cache) e o
+         currentTime para de pintar quadros. Na volta: recarrega se o vídeo foi descartado, destrava de novo
+         e recalcula a rolagem. */
+      window.addEventListener('pageshow', function (e) { if (e.persisted) reanima(); });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) reanima(); });
+    }
+    function armaToque() {
       ['touchend', 'click'].forEach(function (ev) {
-        window.addEventListener(ev, function () { if (vid.readyState < 2) destrava(); }, { passive: true, once: true });
+        window.addEventListener(ev, function () { if (vid.readyState < 2 || vid.seeking) destrava(); }, { passive: true, once: true });
       });
+    }
+    function reanima() {
+      if (!vid) return;
+      if (vid.error || vid.readyState === 0 || vid.networkState === 3) vid.load();
+      destrava();
+      armaToque();
+      setTimeout(function () { posiciona(true); window.ScrollTrigger.refresh(); window.ScrollTrigger.update(); }, 120);
     }
     function destrava() {
       try {
@@ -68,11 +83,11 @@
         else { vid.pause(); posiciona(); }
       } catch (e) { /* segue com o pôster */ }
     }
-    function posiciona() {
+    function posiciona(forca) {
       if (!vid || vid.readyState < 1) return;
       var t = (Math.max(atual, 0) + 0.5) / (m.fps || 24);  // meio do quadro: cai sempre no quadro certo
       if (!vid.paused) vid.pause();
-      if (Math.abs(vid.currentTime - t) > 0.001) vid.currentTime = t;
+      if (forca === true || Math.abs(vid.currentTime - t) > 0.001) vid.currentTime = t;
     }
     function mostraVideo(i) {
       if (i === atual) return;
