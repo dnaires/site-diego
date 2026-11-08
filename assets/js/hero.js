@@ -44,18 +44,40 @@
       caixa.hidden = false;
       vid = document.createElement('video');
       vid.muted = true; vid.playsInline = true; vid.preload = 'auto'; vid.tabIndex = -1;
+      vid.setAttribute('muted', ''); vid.setAttribute('playsinline', ''); vid.setAttribute('webkit-playsinline', '');
       vid.setAttribute('aria-hidden', 'true');
       vid.poster = 'assets/hero/inicio.webp';        // primeiro quadro, enquanto o vídeo carrega
       vid.src = 'assets/hero/' + (S.mobile ? m.video.mobile : m.video.desktop);
       caixa.insertBefore(vid, caixa.firstChild);
       hero.style.setProperty('--fundo', m.fundo[0]);
       if (m.borda) hero.style.setProperty('--borda', m.borda[0]);
+      /* iPhone (Safari) não baixa os quadros de um vídeo que nunca tocou: só mudar currentTime não mostra nada.
+         Toca (sem som) e pausa na hora para "destravar"; se o aparelho bloquear (modo de pouca energia),
+         tenta de novo no primeiro toque na tela. */
+      vid.addEventListener('loadedmetadata', posiciona);
+      vid.addEventListener('loadeddata', posiciona);
+      destrava();
+      ['touchend', 'click'].forEach(function (ev) {
+        window.addEventListener(ev, function () { if (vid.readyState < 2) destrava(); }, { passive: true, once: true });
+      });
+    }
+    function destrava() {
+      try {
+        var p = vid.play();
+        if (p && p.then) p.then(function () { vid.pause(); posiciona(); }).catch(function () {});
+        else { vid.pause(); posiciona(); }
+      } catch (e) { /* segue com o pôster */ }
+    }
+    function posiciona() {
+      if (!vid || vid.readyState < 1) return;
+      var t = (Math.max(atual, 0) + 0.5) / (m.fps || 24);  // meio do quadro: cai sempre no quadro certo
+      if (!vid.paused) vid.pause();
+      if (Math.abs(vid.currentTime - t) > 0.001) vid.currentTime = t;
     }
     function mostraVideo(i) {
       if (i === atual) return;
       atual = i;
-      var t = (i + 0.5) / (m.fps || 24);                 // meio do quadro: cai sempre no quadro certo
-      if (vid.readyState > 0 && Math.abs(vid.currentTime - t) > 0.001) vid.currentTime = t;
+      posiciona();
       hero.style.setProperty('--fundo', m.fundo[Math.min(i, m.fundo.length - 1)]);
       if (m.borda) hero.style.setProperty('--borda', m.borda[Math.min(i, m.borda.length - 1)]);
     }

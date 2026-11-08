@@ -105,7 +105,7 @@ p{margin:0 0 1.1em}
 .hero--scrub{height:320vh}
 .hero--scrub .hero__stage{position:sticky;top:0;height:100svh;min-height:0}
 .hero--scrub .hero__canvas{opacity:1}
-.hero--scrub .hero__logo,.hero--scrub .hero__sub{position:relative;z-index:2}
+.hero--scrub .hero__logo,.hero--scrub .hero__sub{position:relative;z-index:2;opacity:0}  /* escondidos até o hero.js assumir (evita o logo piscar ao abrir); o GSAP mostra no fim */
 .hero--scrub .oracao{z-index:2;position:absolute;top:50%;translate:0 -50%;margin:0;left:var(--gutter);right:var(--gutter);max-width:none;text-align:center}
 @media(min-width:900px){
   .oracao{margin-left:auto;margin-right:0;text-align:right;max-width:24ch}
