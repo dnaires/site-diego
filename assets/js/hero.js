@@ -42,49 +42,89 @@
       total = m.count || m.fundo.length;
       hero.classList.add('hero--video');
       caixa.hidden = false;
-      vid = document.createElement('video');
-      vid.muted = true; vid.playsInline = true; vid.preload = 'auto'; vid.tabIndex = -1;
-      vid.setAttribute('muted', ''); vid.setAttribute('playsinline', ''); vid.setAttribute('webkit-playsinline', '');
-      vid.setAttribute('aria-hidden', 'true');
-      vid.poster = 'assets/hero/inicio.webp';        // primeiro quadro, enquanto o vídeo carrega
-      vid.src = 'assets/hero/' + (S.mobile ? m.video.mobile : m.video.desktop);
-      caixa.insertBefore(vid, caixa.firstChild);
+      criaVideo();
       hero.style.setProperty('--fundo', m.fundo[0]);
       if (m.borda) hero.style.setProperty('--borda', m.borda[0]);
+      armaToque();
+      /* Ao sair para o WhatsApp e voltar, o iPhone deixa o <video> "congelado": continua com readyState 4,
+         mas mudar currentTime não pinta mais quadro nenhum, e play/pause não resolve. A saída é trocar o
+         elemento por um novo (o arquivo já está no cache) e destravar de novo, também no primeiro toque. */
+      var saiu = false;
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) { saiu = true; return; }
+        if (saiu) { saiu = false; reanima(); }
+      });
+      window.addEventListener('pagehide', function () { saiu = true; });
+      window.addEventListener('pageshow', function (e) { if (e.persisted || saiu) { saiu = false; reanima(); } });
+    }
+    function criaVideo() {
+      var novo = document.createElement('video');
+      novo.muted = true; novo.playsInline = true; novo.preload = 'auto'; novo.tabIndex = -1;
+      novo.setAttribute('muted', ''); novo.setAttribute('playsinline', ''); novo.setAttribute('webkit-playsinline', '');
+      novo.setAttribute('aria-hidden', 'true');
+      /* primeiro quadro enquanto carrega; na troca (quadro do meio) fica sem pôster para não piscar o início */
+      if (!vid) novo.poster = 'assets/hero/inicio.webp';
+      novo.src = 'assets/hero/' + (S.mobile ? m.video.mobile : m.video.desktop);
       /* iPhone (Safari) não baixa os quadros de um vídeo que nunca tocou: só mudar currentTime não mostra nada.
          Toca (sem som) e pausa na hora para "destravar"; se o aparelho bloquear (modo de pouca energia),
          tenta de novo no primeiro toque na tela. */
-      vid.addEventListener('loadedmetadata', posiciona);
-      vid.addEventListener('loadeddata', posiciona);
+      novo.addEventListener('loadedmetadata', posiciona);
+      novo.addEventListener('loadeddata', function () {
+        posiciona(true);
+        if (antigo && antigo.parentNode) {                       // troca sem piscar: o novo cobre o antigo até aqui
+          antigo.parentNode.removeChild(antigo); antigo = null;
+          novo.style.position = ''; novo.style.inset = '';
+        }
+      });
+      var antigo = vid;
+      if (antigo) caixa.insertBefore(novo, antigo.nextSibling); else caixa.insertBefore(novo, caixa.firstChild);
+      vid = novo;
+      if (antigo) { novo.style.position = 'absolute'; novo.style.inset = '0'; }
       destrava();
-      armaToque();
-      /* Ao sair para o WhatsApp e voltar, o iPhone suspende o vídeo (ou devolve a página do cache) e o
-         currentTime para de pintar quadros. Na volta: recarrega se o vídeo foi descartado, destrava de novo
-         e recalcula a rolagem. */
-      window.addEventListener('pageshow', function (e) { if (e.persisted) reanima(); });
-      document.addEventListener('visibilitychange', function () { if (!document.hidden) reanima(); });
+      diag('criaVideo');
     }
     function armaToque() {
-      ['touchend', 'click'].forEach(function (ev) {
-        window.addEventListener(ev, function () { if (vid.readyState < 2 || vid.seeking) destrava(); }, { passive: true, once: true });
+      ['touchstart', 'click'].forEach(function (ev) {
+        window.addEventListener(ev, function () { destrava(); diag('toque'); }, { passive: true, once: true });
       });
     }
     function reanima() {
       if (!vid) return;
-      if (vid.error || vid.readyState === 0 || vid.networkState === 3) vid.load();
-      destrava();
+      diag('volta');
+      criaVideo();
       armaToque();
-      setTimeout(function () { posiciona(true); window.ScrollTrigger.refresh(); window.ScrollTrigger.update(); }, 120);
+      setTimeout(function () { window.ScrollTrigger.refresh(); window.ScrollTrigger.update(); posiciona(true); }, 150);
     }
+    var tocando = false;   // enquanto o play() de destravar não termina, posiciona() não pausa (senão o play aborta)
     function destrava() {
+      var v = vid;
       try {
-        var p = vid.play();
-        if (p && p.then) p.then(function () { vid.pause(); posiciona(); }).catch(function () {});
-        else { vid.pause(); posiciona(); }
-      } catch (e) { /* segue com o pôster */ }
+        tocando = true;
+        setTimeout(function () { if (tocando) { tocando = false; v.pause(); posiciona(true); } }, 1200);  // se o play travar
+        var p = v.play();
+        if (p && p.then) p.then(function () { tocando = false; v.pause(); posiciona(true); diag('play ok'); })
+          .catch(function (e) { tocando = false; posiciona(true); diag('play recusado: ' + (e && e.name)); });
+        else { tocando = false; v.pause(); posiciona(true); }
+      } catch (e) { tocando = false; /* segue com o pôster */ }
+    }
+    /* Diagnóstico: abrir o site com ?diag mostra o estado do vídeo num canto da tela (para print no celular). */
+    var caixaDiag = null, logDiag = [];
+    function diag(msg) {
+      if (!/[?&]diag/.test(location.search)) return;
+      if (!caixaDiag) {
+        caixaDiag = document.createElement('pre');
+        caixaDiag.style.cssText = 'position:fixed;left:4px;top:70px;z-index:9999;max-width:70vw;margin:0;padding:6px;font:11px/1.3 monospace;color:#0f0;background:rgba(0,0,0,.75);pointer-events:none;white-space:pre-wrap';
+        document.body.appendChild(caixaDiag);
+        setInterval(function () { diag(''); }, 500);
+      }
+      if (msg) { logDiag.push(new Date().toTimeString().slice(3, 8) + ' ' + msg); logDiag = logDiag.slice(-8); }
+      var v = vid;
+      caixaDiag.textContent = (v ? 'rs ' + v.readyState + ' ns ' + v.networkState + ' t ' + v.currentTime.toFixed(2) +
+        ' pausa ' + v.paused + ' seek ' + v.seeking + ' err ' + (v.error && v.error.code) + ' qd ' + atual +
+        ' vids ' + caixa.querySelectorAll('video').length : '') + '\n' + logDiag.join('\n');
     }
     function posiciona(forca) {
-      if (!vid || vid.readyState < 1) return;
+      if (!vid || vid.readyState < 1 || tocando) return;
       var t = (Math.max(atual, 0) + 0.5) / (m.fps || 24);  // meio do quadro: cai sempre no quadro certo
       if (!vid.paused) vid.pause();
       if (forca === true || Math.abs(vid.currentTime - t) > 0.001) vid.currentTime = t;
