@@ -42,7 +42,8 @@ O domínio `medicinacardeal.com.br` fica no **Registro.br** (zona DNS em modo av
 ## Pendências antes de divulgar
 
 - [x] **Domínio e hospedagem:** subdomínio escolhido; `canonical`, `og:url`, `og:image`, `robots.txt`, `sitemap.xml` e JSON-LD já usam o endereço.
-- [ ] **Criar o subdomínio na Hostinger e o DNS no Registro.br** (seção 2) e enviar o pacote.
+- [x] **Publicado em 07/11/2026.** Subdomínio criado no hPanel (a Hostinger só aceita pasta dentro do `public_html` da Cardeal: ficou em `public_html/drdiegoaires`); `CNAME drdiegoaires → medicinacardeal.com.br` no Registro.br (MX/TXT/DKIM intactos); SSL vitalício emitido sozinho pela Hostinger; `Disallow: /drdiegoaires/` no `robots.txt` da Cardeal (servidor e `Versoes/site-versao-clara`). Testado: páginas 200, `http` → `https`, vídeo com Range (206) e abertura rolando no Chrome.
+- **Envio pelo navegador:** o gerenciador aceita bem arquivos até ~10 MB. O pacote foi em duas partes (ZIP sem `hero-1080.mp4` + o vídeo sozinho em `assets/hero/`). Na extração, o File Browser exige nome de pasta: subir um nível (`..`) e extrair com o nome `drdiegoaires`.
 - [x] Endereço, horários, telefone e WhatsApp: são os da Medicina Cardeal (já no site e no JSON-LD).
 - [x] **Vídeo da abertura:** pronto em `assets/hero/` (ver `CLAUDE.md`).
 - [x] **Conteúdo da consulta** (seção `#consulta`) e demais títulos do Dr. Diego.

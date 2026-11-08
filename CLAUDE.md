@@ -2,6 +2,8 @@
 
 Landing page pessoal do **Dr. Diego Aires** (cardiologista, `@dnaires`). HTML/CSS/JS puros, sem build. Spec: `docs/spec-landing-dr-diego.md`; plano: `docs/plano-implementacao.md`; decisões da execução: `docs/ledger.md`; publicação: `docs/PUBLICAR.md`.
 
+**No ar desde 07/11/2026:** https://drdiegoaires.medicinacardeal.com.br/ (Hostinger da Cardeal, pasta `public_html/drdiegoaires`; DNS por CNAME no Registro.br). Para atualizar: regenerar o pacote e enviar só os arquivos alterados pelo File Browser da Hostinger ("Replace"). Login da Hostinger e do Registro.br é sempre feito pelo Dr. Diego.
+
 ## Estrutura
 
 | Caminho | O que é |

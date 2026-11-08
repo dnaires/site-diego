@@ -55,7 +55,8 @@
     sweepReveals();
   }
 
-  /* O mapa do Google só carrega ao clique (sem cookies de terceiros por conta própria). */
+  /* O mapa do Google é criado por JS com loading="lazy": carrega quando a seção de contato se aproxima.
+     Se mudar para "só ao clique", atualizar privacidade.html (seção "Mapa e links externos"). */
   function initMapa() {
     var box = document.getElementById('mapa');
     if (!box) return;
