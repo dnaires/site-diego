@@ -59,6 +59,7 @@
     }
     function criaVideo() {
       var novo = document.createElement('video');
+      novo._criado = Date.now();
       novo.muted = true; novo.playsInline = true; novo.preload = 'auto'; novo.tabIndex = -1;
       novo.setAttribute('muted', ''); novo.setAttribute('playsinline', ''); novo.setAttribute('webkit-playsinline', '');
       novo.setAttribute('aria-hidden', 'true');
@@ -90,7 +91,7 @@
     }
     function reanima() {
       if (!vid) return;
-      diag('volta');
+      diag('reanima');
       criaVideo();
       armaToque();
       setTimeout(function () { window.ScrollTrigger.refresh(); window.ScrollTrigger.update(); posiciona(true); }, 150);
@@ -107,10 +108,17 @@
         else { tocando = false; v.pause(); posiciona(true); }
       } catch (e) { tocando = false; /* segue com o pôster */ }
     }
-    /* Diagnóstico: abrir o site com ?diag mostra o estado do vídeo num canto da tela (para print no celular). */
+    /* Diagnóstico: abrir o site uma vez com ?diag liga, neste aparelho, um quadro com o estado do vídeo
+       (fica ligado mesmo chegando por outro link, para print no celular); ?diag=0 desliga. */
+    var comDiag = false;
+    try {
+      if (/[?&]diag=0/.test(location.search)) localStorage.removeItem('hero-diag');
+      else if (/[?&]diag/.test(location.search)) localStorage.setItem('hero-diag', '1');
+      comDiag = localStorage.getItem('hero-diag') === '1';
+    } catch (e) { comDiag = /[?&]diag(?!=0)/.test(location.search); }
     var caixaDiag = null, logDiag = [];
     function diag(msg) {
-      if (!/[?&]diag/.test(location.search)) return;
+      if (!comDiag) return;
       if (!caixaDiag) {
         caixaDiag = document.createElement('pre');
         caixaDiag.style.cssText = 'position:fixed;left:4px;top:70px;z-index:9999;max-width:70vw;margin:0;padding:6px;font:11px/1.3 monospace;color:#0f0;background:rgba(0,0,0,.75);pointer-events:none;white-space:pre-wrap';
@@ -127,8 +135,28 @@
       if (!vid || vid.readyState < 1 || tocando) return;
       var t = (Math.max(atual, 0) + 0.5) / (m.fps || 24);  // meio do quadro: cai sempre no quadro certo
       if (!vid.paused) vid.pause();
-      if (forca === true || Math.abs(vid.currentTime - t) > 0.001) vid.currentTime = t;
+      if (forca === true || Math.abs(vid.currentTime - t) > 0.001) { vid.currentTime = t; espera(vid); }
     }
+    /* Vigia: o iPhone às vezes congela o <video> (ao voltar de outro app, ao chegar por link de outro site...):
+       o currentTime muda mas nenhum quadro novo aparece. Cada mudança de quadro precisa ser confirmada
+       (requestVideoFrameCallback, ou o evento seeked onde ele não existe); se em 1,5 s não vier, troca o vídeo. */
+    var pedido = 0, trocas = 0, ultimaTroca = 0;
+    function espera(v) {
+      if (!pedido) pedido = Date.now();
+      var ok = function () { if (v === vid) pedido = 0; };
+      if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(ok);
+      else v.addEventListener('seeked', ok, { once: true });
+    }
+    setInterval(function () {
+      if (!vid || document.hidden || tocando) { pedido = 0; return; }
+      var agora = Date.now();
+      var travado = (pedido && agora - pedido > 1500) || (vid.readyState < 2 && agora - vid._criado > 6000);
+      if (travado && trocas < 6 && agora - ultimaTroca > 4000) {
+        trocas++; ultimaTroca = agora; pedido = 0;
+        diag('travado, troca ' + trocas);
+        reanima();
+      }
+    }, 500);
     function mostraVideo(i) {
       if (i === atual) return;
       atual = i;

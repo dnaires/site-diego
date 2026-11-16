@@ -62,3 +62,5 @@ Ruling: texto 'Comecei na UTI em 2016, por isso foram dez anos de UTI' (usei as 
 08/11 (1): iPhone: ao voltar do WhatsApp para o Safari o vídeo da abertura travava. hero.js agora reage a pageshow/visibilitychange: recarrega o vídeo se o iOS o descartou, destrava de novo (play/pause) e recalcula o ScrollTrigger. hero.js ?v=4. Publicado (hero.js e index.html).
 
 08/11 (2): a correção (1) não resolveu no iPhone. Agora, na volta (visibilitychange/pageshow depois de sair), o hero.js troca o <video> por um novo no mesmo ponto (sem pôster, cobre o antigo até loadeddata), destrava no primeiro toque sempre e não deixa posiciona() abortar o play de destravar (flag tocando). Abrir com ?diag mostra o estado do vídeo na tela para print no celular. hero.js ?v=5.
+
+16/11 (1): vindo do link do site da Cardeal (mesma aba, carga nova) o vídeo também congelou no iPhone. hero.js ganhou um vigia: cada troca de quadro precisa ser confirmada (requestVideoFrameCallback, ou seeked); sem confirmação em 1,5 s (ou readyState<2 por 6 s) troca o <video> por um novo (no máximo 6 vezes, 4 s entre trocas). ?diag agora fica ligado no aparelho (localStorage) até ?diag=0. hero.js ?v=6.
