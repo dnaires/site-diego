@@ -29,6 +29,11 @@ DirectoryIndex index.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Strict-Transport-Security "max-age=31536000"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # 26/11: o HTML ia sem Cache-Control e o Safari guardava uma cópia velha (com hero.js antigo) por dias.
+  # Agora o navegador sempre confere com o servidor antes de usar a página (304 se nada mudou).
+  <FilesMatch "\.html?$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
 </IfModule>
 
 # o vídeo da abertura precisa de Range (seek pela rolagem): Apache e LiteSpeed já enviam Accept-Ranges
