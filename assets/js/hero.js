@@ -10,14 +10,27 @@
   var hero = document.getElementById('inicio');
   if (!S || !hero || S.reduced || !window.gsap || !window.ScrollTrigger) { if (hero) hero.classList.remove('hero--scrub'); return; }
 
-  fetch('assets/hero/manifest.json')
-    .then(function (r) { if (!r.ok) throw new Error('sem manifest'); return r.json(); })
+  function pegaManifest() {
+    return fetch('assets/hero/manifest.json')
+      .then(function (r) { if (!r.ok) throw new Error('sem manifest'); return r.json(); });
+  }
+  pegaManifest()
+    .catch(function () { return new Promise(function (ok) { setTimeout(ok, 800); }).then(pegaManifest); })  // 2ª tentativa
     .catch(function () { return null; })
-    .then(iniciar);
+    .then(function (m) { try { iniciar(m); } catch (e) { desiste(); } });
+
+  /* volta à abertura estática (logo + oração visíveis, sem rolagem presa) */
+  function desiste() {
+    hero.classList.remove('hero--scrub', 'hero--video');
+    var c = document.getElementById('hero-video'); if (c) c.hidden = true;
+  }
 
   function iniciar(m) {
+    if (hero.hasAttribute('data-desistiu')) return;   // a rede de segurança do index.html já pôs a versão estática
     var temVideo = !!(m && m.video && m.fundo && m.fundo.length > 1 && m.duration);
-    if (S.mobile && !temVideo) { hero.classList.remove('hero--scrub'); return; }
+    /* sem vídeo (manifest não veio): abertura estática também no computador; o modo brasa deixava só a oração */
+    if (!temVideo && !(m && m.count > 1)) { desiste(); return; }
+    if (S.mobile && !temVideo) { desiste(); return; }
 
     var stage = hero.querySelector('.hero__stage');
     var canvas = document.getElementById('hero-canvas');
@@ -147,10 +160,16 @@
       if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(ok);
       else v.addEventListener('seeked', ok, { once: true });
     }
-    setInterval(function () {
+    /* só em aparelhos Apple (o congelamento é do WebKit) e só com o trecho já baixado: em internet lenta a
+       falta de quadro é download em curso, e trocar o vídeo recomeçaria o download do zero. */
+    var ehApple = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+      (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1) ||
+      (/Safari/.test(navigator.userAgent) && !/Chrome|Chromium|Edg|OPR|Firefox|Android/.test(navigator.userAgent));
+    if (ehApple) setInterval(function () {
       if (!vid || document.hidden || tocando) { pedido = 0; return; }
       var agora = Date.now();
-      var travado = (pedido && agora - pedido > 1500) || (vid.readyState < 2 && agora - vid._criado > 6000);
+      var travado = (pedido && agora - pedido > 1500 && vid.readyState >= 3) ||
+        (vid.readyState < 2 && vid.networkState !== 2 && agora - vid._criado > 6000);   // parado sem baixar nada
       if (travado && trocas < 6 && agora - ultimaTroca > 4000) {
         trocas++; ultimaTroca = agora; pedido = 0;
         diag('travado, troca ' + trocas);

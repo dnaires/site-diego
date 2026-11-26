@@ -57,7 +57,11 @@
 <!-- 1. ABERTURA -->
 <section class="hero" id="inicio" aria-label="Abertura">
   <script>/* layout da abertura em scroll já no primeiro desenho (evita o salto do título; hero.js tira a classe se desistir) */
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.getElementById('inicio').classList.add('hero--scrub');</script>
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.getElementById('inicio').classList.add('hero--scrub');
+    /* rede de segurança (26/11): num computador a abertura ficou só com o fundo e a oração. Se em 6 s o hero.js
+       não tiver mostrado o vídeo, volta à abertura estática (logo + oração) e o hero.js não começa mais. */
+    setTimeout(function () { var h = document.getElementById('inicio');
+      if (h.classList.contains('hero--scrub') && !h.classList.contains('hero--video')) { h.classList.remove('hero--scrub'); h.setAttribute('data-desistiu', ''); } }, 6000);</script>
   <div class="hero__stage">
     <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
     <!-- Vídeo 9:16 (criado por hero.js) centralizado, sem corte lateral; o texto do logo entra em fade sobre o último quadro -->
@@ -297,6 +301,6 @@
 <script src="assets/vendor/ScrollTrigger.min.js"></script>
 <script src="assets/vendor/lenis.min.js"></script>
 <script src="assets/js/site.js?v=3"></script>
-<script src="assets/js/hero.js?v=6"></script>
+<script src="assets/js/hero.js?v=7"></script>
 </body>
 </html>
