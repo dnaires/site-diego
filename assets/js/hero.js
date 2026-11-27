@@ -11,7 +11,7 @@
   if (!S || !hero || S.reduced || !window.gsap || !window.ScrollTrigger) { if (hero) hero.classList.remove('hero--scrub'); return; }
 
   function pegaManifest() {
-    return fetch('assets/hero/manifest.json')
+    return fetch('assets/hero/manifest.json?v=3')
       .then(function (r) { if (!r.ok) throw new Error('sem manifest'); return r.json(); });
   }
   pegaManifest()

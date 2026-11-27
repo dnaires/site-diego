@@ -21,6 +21,9 @@ from PIL import Image
 
 RAIZ = Path(__file__).resolve().parent.parent
 DEST = RAIZ / "assets" / "hero"
+# 26/11: os nomes dos mp4 não mudam e o .htaccess guarda vídeo por 1 semana; suba VERSAO a cada vídeo novo
+# (vai no manifest como ?v=, e o hero.js pede o manifest com ?v= também).
+VERSAO = "3"
 
 
 def sonda(video: Path) -> dict:
@@ -73,7 +76,7 @@ def main() -> None:
     a = ap.parse_args()
     if a.so_bordas:
         man = json.loads((DEST / "manifest.json").read_text(encoding="utf-8"))
-        man["borda"] = bordas(DEST / man["video"]["mobile"])
+        man["borda"] = bordas(DEST / man["video"]["mobile"].split("?")[0])
         (DEST / "manifest.json").write_text(json.dumps(man, separators=(",", ":")), encoding="utf-8")
         print(f"borda: {len(man['borda'])} quadros ({man['count']} no manifest). Rode empacotar.py em seguida.")
         return
@@ -95,7 +98,7 @@ def main() -> None:
     Image.open(DEST / "_ultimo.png").convert("RGB").save(DEST / "poster.webp", quality=88, method=6)
     (DEST / "_ultimo.png").unlink()
     f = fundos(a.video)
-    manifest = {"video": {"desktop": "hero-1080.mp4", "mobile": "hero-540.mp4"}, "width": 1080, "height": 1920,
+    manifest = {"video": {"desktop": f"hero-1080.mp4?v={VERSAO}", "mobile": f"hero-540.mp4?v={VERSAO}"}, "width": 1080, "height": 1920,
                 "fps": info["fps"], "count": len(f), "duration": info["dur"], "fundo": f, "borda": bordas(a.video)}
     (DEST / "manifest.json").write_text(json.dumps(manifest, separators=(",", ":")), encoding="utf-8")
     print(f"{len(f)} quadros, {info['dur']:.2f} s, fundo {f[0]} -> {f[-1]}. Rode empacotar.py em seguida.")
